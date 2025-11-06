@@ -8,10 +8,18 @@ import com.example.an_app_for_runners_and_cyclists.databinding.ActivityMainBindi
 
 class MainActivity : AppCompatActivity() {
 
-/* "Зажги, гаси, насри и смой,
-И в этом вся наука:
-Чтоб буквы видеть, милый мой,
-Сумей говно сменить мочой. Иди, работай, сука!"
-*/
+    private lateinit var binding: ActivityMainBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setupNavigation()
+    }
+
+    private fun setupNavigation() {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        binding.navView.setupWithNavController(navController)
+    }
 }

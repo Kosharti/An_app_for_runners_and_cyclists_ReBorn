@@ -1,19 +1,18 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.hilt.android)
     alias(libs.plugins.androidx.navigation.safeargs.kotlin)
     id("kotlin-kapt")
 }
 
 android {
     namespace = "com.example.an_app_for_runners_and_cyclists"
-    compileSdk = 36
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.an_app_for_runners_and_cyclists"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -41,7 +40,6 @@ android {
     }
     buildFeatures {
         viewBinding = true
-        dataBinding = true
         buildConfig = true
     }
 }
@@ -71,15 +69,12 @@ dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-
-    // В dependencies блока build.gradle.kts добавляем:
+    // Дополнительные зависимости
     implementation("com.jakewharton.timber:timber:5.0.1")
-    implementation ("com.google.android.material:material:1.6.0")
-    // Location Services
     implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.google.code.gson:gson:2.10.1")
+
+    implementation("javax.inject:javax.inject:1")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

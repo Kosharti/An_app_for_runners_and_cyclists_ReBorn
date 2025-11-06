@@ -7,31 +7,31 @@
 
     <fragment
         android:id="@+id/runTrackingFragment"
-        android:name="com.example.an_app_for_runners_and_cyclists.ui.RunTrackingFragment"
-        android:label="Track Run" />
+        android:name="com.example.an_app_for_runners_and_cyclists.ui.tracking.RunTrackingFragment"
+        android:label="Track Run"
+        tools:layout="@layout/fragment_run_tracking" />
 
     <fragment
         android:id="@+id/runHistoryFragment"
-        android:name="com.example.an_app_for_runners_and_cyclists.ui.RunHistoryFragment"
-        android:label="Run History">
-        <action
-            android:id="@+id/action_runHistoryFragment_to_runDetailsFragment"
-            app:destination="@id/runDetailsFragment" />
-    </fragment>
+        android:name="com.example.an_app_for_runners_and_cyclists.ui.history.RunHistoryFragment"
+        android:label="Run History"
+        tools:layout="@layout/fragment_run_history" />
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.an_app_for_runners_and_cyclists.ui.ProfileFragment"
-        android:label="My Profile" />
+        android:name="com.example.an_app_for_runners_and_cyclists.ui.profile.ProfileFragment"
+        android:label="My Profile"
+        tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/otherRunnersFragment"
-        android:name="com.example.an_app_for_runners_and_cyclists.ui.OtherRunnersFragment"
-        android:label="Other Runners" />
+        android:name="com.example.an_app_for_runners_and_cyclists.ui.community.OtherRunnersFragment"
+        android:label="Other Runners"
+        tools:layout="@layout/fragment_other_runners" />
 
     <fragment
         android:id="@+id/runDetailsFragment"
-        android:name="com.example.an_app_for_runners_and_cyclists.ui.RunDetailsFragment"
+        android:name="com.example.an_app_for_runners_and_cyclists.ui.details.RunDetailsFragment"
         android:label="Run Details">
         <argument
             android:name="runId"

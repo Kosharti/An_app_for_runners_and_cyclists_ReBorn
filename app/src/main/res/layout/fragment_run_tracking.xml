@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_tracking">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp">
+
+        <!-- Menu Icon -->
+        <LinearLayout
+            android:id="@+id/menuIcon"
+            android:layout_width="20dp"
+            android:layout_height="14dp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="2dp"
+                android:background="#FFFFFF" />
+
+            <View
+                android:layout_width="11dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_gravity="start"
+                android:background="#FFFFFF" />
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="3dp"
+                android:background="#FFFFFF" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/group"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Track Run"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/history"
+            android:gravity="center"
+            android:background="@android:color/transparent"/>
+
+    </LinearLayout>
+
+    <!-- Main Content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingBottom="180dp">
+
+        <!-- Duration -->
+        <TextView
+            android:id="@+id/tvDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.00"
+            android:textColor="#FFFFFF"
+            android:textSize="48sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Duration"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Distance -->
+        <TextView
+            android:id="@+id/tvDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.00"
+            android:textColor="#FFFFFF"
+            android:textSize="48sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Distance (km)"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Calories -->
+        <TextView
+            android:id="@+id/tvCalories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.00"
+            android:textColor="#FFFFFF"
+            android:textSize="48sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calories Burned"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <!-- Start/Stop Button -->
+    <FrameLayout
+        android:id="@+id/startButton"
+        android:layout_width="142dp"
+        android:layout_height="142dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="120dp"
+        android:visibility="visible">
+
+        <!-- Outer Circle -->
+        <View
+            android:layout_width="142dp"
+            android:layout_height="142dp"
+            android:background="@drawable/circle_outer_start"
+            android:layout_gravity="center" />
+
+        <!-- Middle Circle -->
+        <View
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:background="@drawable/circle_middle_start"
+            android:layout_gravity="center" />
+
+        <!-- Inner Circle -->
+        <View
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:background="@drawable/circle_inner_start"
+            android:layout_gravity="center" />
+
+        <!-- Play Icon -->
+        <ImageButton
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/play_arrow"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+    <!-- Stop Button -->
+    <FrameLayout
+        android:id="@+id/stopButton"
+        android:layout_width="142dp"
+        android:layout_height="142dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="120dp"
+        android:visibility="gone">
+
+        <!-- Outer Circle -->
+        <View
+            android:layout_width="142dp"
+            android:layout_height="142dp"
+            android:background="@drawable/circle_outer_stop"
+            android:layout_gravity="center" />
+
+        <!-- Middle Circle -->
+        <View
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:background="@drawable/circle_middle_stop"
+            android:layout_gravity="center" />
+
+        <!-- Inner Circle -->
+        <View
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:background="@drawable/circle_inner_stop"
+            android:layout_gravity="center" />
+
+        <!-- Stop Icon -->
+        <ImageButton
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/stop"
+            android:gravity="center"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+    <!-- Bottom Info -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp">
+
+        <!-- Weather Info -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Weather Icon -->
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/weather_icon"
+                android:layout_marginEnd="8dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvTemperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30° C"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvWeatherCondition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thunder Storm"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Heart Rate Info -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Heart Icon -->
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="26dp"
+                android:src="@drawable/heart_icon"
+                android:layout_marginEnd="8dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvHeartRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="87"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BPM"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
