@@ -5,13 +5,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_profile"
     android:padding="16dp">
-    <!-- СОЗДАТЬ DRAWABLE !!!!!
-    ic_wifi.xml
-    ic_reception.xml
-    ic_battery.xml
-    И ОСТАЛЬНЫЕ !!!!-->
-
-
 
     <!-- Header with Back Button and Title -->
     <RelativeLayout
