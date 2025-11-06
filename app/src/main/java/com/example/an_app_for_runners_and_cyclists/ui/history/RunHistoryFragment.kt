@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.an_app_for_runners_and_cyclists.R
 import com.example.an_app_for_runners_and_cyclists.RunnersExchangeApplication
 import com.example.an_app_for_runners_and_cyclists.databinding.FragmentRunHistoryBinding
 import com.example.an_app_for_runners_and_cyclists.ui.ViewModelFactory
@@ -49,8 +53,49 @@ class RunHistoryFragment : Fragment() {
         )
 
         binding.rvRunHistory.apply {
+            layoutManager = LinearLayoutManager(requireContext()) // ДОБАВЬ ЭТУ СТРОЧКУ!
             adapter = monthRunAdapter
         }
+    }
+
+    private fun setupHeader() {
+        // Обработчик меню (три полоски)
+        binding.menuIcon.setOnClickListener {
+            showDropdownMenu()
+        }
+
+        // Обработчик иконки истории
+        binding.historyIcon.setOnClickListener {
+            findNavController().navigate(R.id.runHistoryFragment)
+        }
+    }
+
+    private fun showDropdownMenu() {
+        val popup = PopupMenu(requireContext(), binding.menuIcon)
+        popup.menuInflater.inflate(R.menu.main_dropdown_menu, popup.menu)
+
+        popup.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_tracking -> {
+                    findNavController().navigate(R.id.runTrackingFragment)
+                    true
+                }
+                R.id.action_history -> {
+                    findNavController().navigate(R.id.runHistoryFragment)
+                    true
+                }
+                R.id.action_profile -> {
+                    findNavController().navigate(R.id.profileFragment)
+                    true
+                }
+                R.id.action_community -> {
+                    findNavController().navigate(R.id.otherRunnersFragment)
+                    true
+                }
+                else -> false
+            }
+        }
+        popup.show()
     }
 
     private fun observeViewModel() {

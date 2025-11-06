@@ -10,10 +10,22 @@
         android:name="com.example.an_app_for_runners_and_cyclists.ui.SignInFragment"
         android:label="Sign In">
         <action
+            android:id="@+id/action_signInFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.an_app_for_runners_and_cyclists.ui.LoginFragment"
+        android:label="Login">
         <action
-            android:id="@+id/action_signInFragment_to_main_nav_graph"
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_main_nav_graph"
             app:destination="@id/main_nav_graph" />
     </fragment>
 
@@ -22,8 +34,11 @@
         android:name="com.example.an_app_for_runners_and_cyclists.ui.SignUpFragment"
         android:label="Sign Up">
         <action
-            android:id="@+id/action_signUpFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
+            android:id="@+id/action_signUpFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_main_nav_graph"
+            app:destination="@id/main_nav_graph" />
     </fragment>
 
     <include app:graph="@navigation/main_nav_graph" />

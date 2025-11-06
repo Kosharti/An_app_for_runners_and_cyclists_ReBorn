@@ -6,63 +6,80 @@
     android:background="@drawable/bg_profile"
     android:padding="16dp">
 
-    <!-- Header with Back Button and Title -->
-    <RelativeLayout
+    <!-- Твой кастомный header -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="24dp">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp">
 
-        <!-- Back Button -->
-        <ImageButton
-            android:id="@+id/btn_back"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/arrow_back"
-            android:background="@android:color/transparent"/>
-
-        <!-- Profile Icon and Title -->
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="24dp"
-            android:layout_centerHorizontal="true">
-
-            <!-- Profile Icon -->
-            <ImageView
-                android:id="@+id/ic_person"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentLeft="true"
-                android:gravity="center"
-                android:text="person"
-                android:src="@drawable/person"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp" />
-
-            <!-- Title -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_toRightOf="@id/ic_person"
-                android:layout_marginLeft="5dp"
-                android:text="My Profile"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
-
-        <!-- Save Button -->
-        <ImageButton
-            android:id="@+id/btn_save"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentRight="true"
+        <!-- Menu Icon -->
+        <LinearLayout
+            android:id="@+id/menuIcon"
+            android:layout_width="20dp"
+            android:layout_height="14dp"
+            android:orientation="vertical"
             android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="2dp"
+                android:background="#FFFFFF" />
+
+            <View
+                android:layout_width="11dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_gravity="start"
+                android:background="#FFFFFF" />
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="3dp"
+                android:background="#FFFFFF" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Заголовок (будет меняться) -->
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Track Run"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Иконка истории (справа) -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/cancel"
+            android:background="@android:color/transparent"/>
+        <ImageButton
+            android:id="@+id/btnSave"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/done_all"
             android:background="@android:color/transparent"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <!-- Profile Card -->
     <RelativeLayout
@@ -94,6 +111,7 @@
                 android:src="@drawable/base_profile_img" />
 
             <RelativeLayout
+                android:id="@+id/btnCamera"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_alignParentBottom="true"
@@ -147,6 +165,7 @@
             android:orientation="vertical">
 
             <ImageButton
+                android:id="@+id/btnEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/edit"
@@ -178,10 +197,10 @@
                     android:src="@drawable/location_on" />
 
                 <TextView
+                    android:id="@+id/tvDistanceValue"
                     android:layout_width="wrap_content"
                     android:layout_height="16dp"
                     android:layout_below="@id/icon_distance"
-
                     android:layout_centerHorizontal="true"
                     android:text="15 km"
                     android:textColor="#FFFFFF"
@@ -205,6 +224,7 @@
                     android:src="@drawable/alarm" />
 
                 <TextView
+                    android:id="@+id/tvDurationValue"
                     android:layout_width="wrap_content"
                     android:layout_height="16dp"
                     android:layout_below="@id/icon_duration"
@@ -231,6 +251,7 @@
                     android:src="@drawable/flash_on" />
 
                 <TextView
+                    android:id="@+id/tvCaloriesValue"
                     android:layout_width="wrap_content"
                     android:layout_height="16dp"
                     android:layout_below="@id/icon_calories"
@@ -243,6 +264,7 @@
 
         </LinearLayout>
 
+        <!-- Заменяем весь ScrollView и его содержимое на: -->
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -254,213 +276,114 @@
                 android:orientation="vertical">
 
                 <!-- Username -->
-                <RelativeLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilUserName"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:alpha="0.8"
-                    android:background="#251B24"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
+                    style="@style/OutlinedTextField"
+                    app:startIconDrawable="@drawable/person_sign_up">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="14dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Choose your username"
-                        android:textColor="#FFFFFF"
-                        android:textSize="11sp" />
-
-                    <View
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etUserName"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="16dp"
-                        android:alpha="0.2"
-                        android:background="#FFFFFF" />
+                        android:layout_height="wrap_content"
+                        android:hint="Username"
+                        android:text="Bobby A. Munson"
+                        android:textColor="#FFFFFF" />
 
-                </RelativeLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Email -->
-                <RelativeLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilEmail"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:alpha="0.8"
-                    android:background="#251B24"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
+                    style="@style/OutlinedTextField"
+                    app:startIconDrawable="@drawable/email_icon">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="14dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Your Email"
-                        android:textColor="#FFFFFF"
-                        android:textSize="11sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="18dp"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email"
                         android:text="munson1450@gmail.com"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp" />
+                        android:inputType="textEmailAddress"
+                        android:textColor="#FFFFFF" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="16dp"
-                        android:alpha="0.2"
-                        android:background="#FFFFFF" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                </RelativeLayout>
-
-                <!-- Sign Up Method -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="8dp"
-                    android:alpha="0.8"
-                    android:background="#251B24"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="14dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Facebook Login"
-                        android:textColor="#FFFFFF"
-                        android:textSize="11sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="18dp"
-                        android:text="Sign Up Method"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="italic" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="16dp"
-                        android:alpha="0.2"
-                        android:background="#FFFFFF" />
-
-                </RelativeLayout>
-
-                <!-- Height and Weight -->
+                <!-- Height and Weight Row -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <!-- Height -->
-                    <RelativeLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilHeight"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="4dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:alpha="0.8"
-                        android:background="#251B24"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp">
+                        android:layout_marginEnd="4dp"
+                        style="@style/OutlinedTextField"
+                        app:startIconDrawable="@drawable/height_icon">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="14dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="sans-serif-light"
-                            android:text="Enter height"
-                            android:textColor="#FFFFFF"
-                            android:textSize="11sp" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etHeight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Height (cm)"
+                            android:text="180"
+                            android:inputType="number"
+                            android:textColor="#FFFFFF" />
 
-                        <View
-                            android:layout_width="96dp"
-                            android:layout_height="1dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="16dp"
-                            android:alpha="0.2"
-                            android:background="#FFFFFF" />
-
-                    </RelativeLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Weight -->
-                    <RelativeLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilWeight"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="4dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:alpha="0.8"
-                        android:background="#251B24"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp">
+                        android:layout_marginStart="4dp"
+                        style="@style/OutlinedTextField"
+                        app:startIconDrawable="@drawable/weight_icon">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="14dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="sans-serif-light"
-                            android:text="Enter weight"
-                            android:textColor="#FFFFFF"
-                            android:textSize="11sp" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etWeight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Weight (kg)"
+                            android:text="75"
+                            android:inputType="number"
+                            android:textColor="#FFFFFF" />
 
-                        <View
-                            android:layout_width="96dp"
-                            android:layout_height="1dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="16dp"
-                            android:alpha="0.2"
-                            android:background="#FFFFFF" />
-
-                    </RelativeLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
-                <!-- Reason for Running -->
-                <RelativeLayout
+                <!-- Running Reason -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilRunningReason"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="8dp"
-                    android:alpha="0.8"
-                    android:background="#251B24"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    style="@style/OutlinedTextField"
+                    app:startIconDrawable="@drawable/goal_icon">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="14dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Reason for running"
-                        android:textColor="#FFFFFF"
-                        android:textSize="11sp" />
-
-                    <View
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etRunningReason"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="16dp"
-                        android:alpha="0.2"
-                        android:background="#FFFFFF" />
+                        android:layout_height="wrap_content"
+                        android:hint="Reason for running"
+                        android:text="Fitness and health"
+                        android:textColor="#FFFFFF" />
 
-                </RelativeLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
-
         </ScrollView>
 
     </RelativeLayout>

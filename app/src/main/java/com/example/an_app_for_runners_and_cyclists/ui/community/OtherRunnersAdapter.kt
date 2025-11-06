@@ -31,6 +31,9 @@ class OtherRunnersAdapter : ListAdapter<User, OtherRunnersAdapter.RunnerViewHold
             binding.tvRunnerName.text = runner.name
             binding.tvRunnerAddress.text = runner.address
             binding.tvRunnerStats.text = "Total: ${String.format("%.1f", runner.totalDistance)} km, ${RunCalculator.formatDuration(runner.totalTime)}"
+
+            // TODO: Установить аватар когда будет функционал
+            // binding.ivRunnerAvatar.setImageResource(...)
         }
     }
 

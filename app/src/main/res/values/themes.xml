@@ -1,11 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.RunnersExchange" parent="Theme.Material3.DayNight">
+    <style name="Base.Theme.RunnersExchange" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary_dark</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="fontFamily">@font/montserrat</item>
+        <item name="android:windowFullscreen">true</item>
+
+        <!-- ДОБАВЛЯЕМ ЦВЕТА ДЛЯ ТЕКСТА -->
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#CCFFFFFF</item>
+        <item name="colorOnSurface">#FFFFFF</item>
     </style>
 
     <style name="OutlinedTextField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -15,12 +21,17 @@
         <item name="boxCornerRadiusBottomStart">25dp</item>
         <item name="boxCornerRadiusTopEnd">25dp</item>
         <item name="boxCornerRadiusTopStart">25dp</item>
-        <item name="hintTextColor">#FFFFFFFF</item>
-        <item name="android:textColorHint">#FFFFFFFF</item>
+
+        <!-- ЯВНО УКАЗЫВАЕМ ЦВЕТА -->
+        <item name="hintTextColor">#99FFFFFF</item>
+        <item name="android:textColorHint">#99FFFFFF</item>
         <item name="boxBackgroundColor">@android:color/transparent</item>
         <item name="boxBackgroundMode">none</item>
         <item name="android:background">@drawable/bg_text_field_with_shadow</item>
         <item name="android:elevation">2dp</item>
+
+        <!-- ЦВЕТ ТЕКСТА ДЛЯ ВВОДА -->
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 
     <style name="Theme.RunnersExchange" parent="Base.Theme.RunnersExchange" />

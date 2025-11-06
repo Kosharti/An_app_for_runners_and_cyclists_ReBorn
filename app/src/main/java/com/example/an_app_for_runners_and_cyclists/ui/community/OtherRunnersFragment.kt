@@ -42,7 +42,7 @@ class OtherRunnersFragment : Fragment() {
 
     private fun setupRecyclerView() {
         adapter = OtherRunnersAdapter()
-        binding.rvOtherRunners.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvOtherRunners.layoutManager = LinearLayoutManager(requireContext()) // ДОБАВЬ ЭТУ СТРОЧКУ!
         binding.rvOtherRunners.adapter = adapter
     }
 

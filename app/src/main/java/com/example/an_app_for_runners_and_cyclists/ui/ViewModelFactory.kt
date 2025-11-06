@@ -41,6 +41,9 @@ class ViewModelFactory(private val application: RunnersExchangeApplication) : Vi
             modelClass.isAssignableFrom(RunDetailsViewModel::class.java) -> {
                 RunDetailsViewModel(runRepository) as T
             }
+            modelClass.isAssignableFrom(SignUpViewModel::class.java) -> {
+                SignUpViewModel(userRepository) as T
+            }
             else -> {
                 throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

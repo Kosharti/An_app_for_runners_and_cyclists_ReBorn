@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_tracking">
 
-    <!-- Header -->
+    <!-- Твой кастомный header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +20,10 @@
             android:layout_width="20dp"
             android:layout_height="14dp"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
 
             <View
                 android:layout_width="20dp"
@@ -47,38 +50,27 @@
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
-        <LinearLayout
+        <!-- Заголовок (будет меняться) -->
+        <TextView
+            android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/group"
-                android:gravity="center"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Track Run"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:gravity="center" />
-
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:text="Track Run"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Space
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
+        <!-- Иконка истории (справа) -->
         <ImageButton
+            android:id="@+id/history_icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/history"
-            android:gravity="center"
             android:background="@android:color/transparent"/>
 
     </LinearLayout>

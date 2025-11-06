@@ -19,8 +19,9 @@
         android:theme="@style/Theme.RunnersExchange"
         tools:targetApi="31">
 
+        <!-- SignInActivity как ГЛАВНЫЙ экран запуска -->
         <activity
-            android:name=".MainActivity"
+            android:name=".SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +29,12 @@
             </intent-filter>
         </activity>
 
-        <!-- Добавляем сервис -->
+        <!-- MainActivity БЕЗ intent-filter - запускается только из кода -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <!-- Сервис локации -->
         <service
             android:name=".service.LocationService"
             android:enabled="true"
