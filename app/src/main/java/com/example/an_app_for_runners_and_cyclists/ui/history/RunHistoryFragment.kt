@@ -43,6 +43,7 @@ class RunHistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeViewModel()
+        setupHeader()
     }
 
     private fun setupRecyclerView() {

@@ -42,83 +42,59 @@
         android:fontFamily="@font/montserrat_regular" />
 
     <!-- Поле Full Name -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilFullName"
+    <EditText
+        android:id="@+id/etFullName"
         android:layout_width="270dp"
         android:layout_height="48dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="359dp"
-        style="@style/OutlinedTextField"
-        app:startIconDrawable="@drawable/person_sign_up"
-        app:startIconTint="@color/white">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etFullName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Full Name"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#99FFFFFF"
-            android:paddingStart="12dp"
-            android:paddingEnd="20dp"
-            android:background="@android:color/transparent"
-            android:fontFamily="@font/roboto_regular" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        android:hint="Full Name"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#99FFFFFF"
+        android:background="@drawable/bg_text_field_with_shadow"
+        android:paddingStart="45dp"
+        android:paddingEnd="20dp"
+        android:drawableStart="@drawable/person_sign_up"
+        android:drawablePadding="12dp"
+        android:inputType="textEmailAddress"
+        android:fontFamily="@font/roboto_regular" />
 
     <!-- Поле Email -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilEmail"
+    <EditText
+        android:id="@+id/etEmail"
         android:layout_width="270dp"
         android:layout_height="48dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="422dp"
-        style="@style/OutlinedTextField"
-        app:startIconDrawable="@drawable/email_icon"
-        app:startIconTint="@color/white">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etEmail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#99FFFFFF"
-            android:paddingStart="12dp"
-            android:paddingEnd="20dp"
-            android:background="@android:color/transparent"
-            android:fontFamily="@font/roboto_regular" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        android:hint="Email"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#99FFFFFF"
+        android:background="@drawable/bg_text_field_with_shadow"
+        android:paddingStart="45dp"
+        android:paddingEnd="20dp"
+        android:drawableStart="@drawable/email_icon"
+        android:drawablePadding="12dp"
+        android:inputType="textEmailAddress"
+        android:fontFamily="@font/roboto_regular" />
 
     <!-- Поле Password -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilPassword"
+    <!-- Поле Password -->
+    <EditText
+        android:id="@+id/etPassword"
         android:layout_width="270dp"
         android:layout_height="48dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="485dp"
-        style="@style/OutlinedTextField"
-        app:startIconDrawable="@drawable/password"
-        app:startIconTint="@color/white"
-        app:endIconMode="password_toggle"
-        app:endIconTint="@color/white">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#99FFFFFF"
-            android:paddingStart="12dp"
-            android:paddingEnd="20dp"
-            android:background="@android:color/transparent"
-            android:fontFamily="@font/roboto_regular" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        android:hint="Password"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#99FFFFFF"
+        android:background="@drawable/bg_text_field_with_shadow"
+        android:paddingStart="45dp"
+        android:paddingEnd="20dp"
+        android:drawableStart="@drawable/password"
+        android:drawablePadding="12dp"
+        android:inputType="textPassword"
+        android:fontFamily="@font/roboto_regular" />
 
     <!-- Кнопка Submit -->
     <com.google.android.material.button.MaterialButton

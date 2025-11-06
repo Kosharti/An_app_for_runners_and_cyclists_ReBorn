@@ -5,14 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.an_app_for_runners_and_cyclists.R
+import com.example.an_app_for_runners_and_cyclists.RunnersExchangeApplication
 import com.example.an_app_for_runners_and_cyclists.databinding.FragmentLoginBinding
+import com.example.an_app_for_runners_and_cyclists.ui.ViewModelFactory
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: LoginViewModel by viewModels {
+        ViewModelFactory(requireActivity().application as RunnersExchangeApplication)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,19 +36,15 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
+        observeViewModel()
     }
 
     private fun setupClickListeners() {
         binding.btnLogin.setOnClickListener {
-            val email = binding.etEmail.text?.toString()?.trim()
-            val password = binding.etPassword.text?.toString()
+            val email = binding.etEmail.text?.toString()?.trim() ?: ""
+            val password = binding.etPassword.text?.toString() ?: ""
 
-            if (isValidLogin(email, password)) {
-                // TODO: Реальная проверка с базой данных
-                navigateToMainApp()
-            } else {
-                showLoginError()
-            }
+            viewModel.login(email, password)
         }
 
         binding.btnBack.setOnClickListener {
@@ -50,14 +56,42 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun isValidLogin(email: String?, password: String?): Boolean {
-        // TODO: Заменить на реальную проверку с базой данных
-        return !email.isNullOrEmpty() && !password.isNullOrEmpty() && password.length >= 6
+    private fun observeViewModel() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.loginState.collectLatest { state ->
+                when (state) {
+                    is LoginViewModel.LoginState.Idle -> {
+                        hideProgress()
+                    }
+                    is LoginViewModel.LoginState.Loading -> {
+                        showProgress()
+                    }
+                    is LoginViewModel.LoginState.Success -> {
+                        hideProgress()
+                        navigateToMainApp()
+                    }
+                    is LoginViewModel.LoginState.Error -> {
+                        hideProgress()
+                        showLoginError(state.message)
+                    }
+                }
+            }
+        }
     }
 
-    private fun showLoginError() {
-        binding.etEmail.error = "Invalid email or password"
-        binding.etPassword.error = "Invalid email or password"
+    private fun showProgress() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.btnLogin.isEnabled = false
+    }
+
+    private fun hideProgress() {
+        binding.progressBar.visibility = View.GONE
+        binding.btnLogin.isEnabled = true
+    }
+
+    private fun showLoginError(message: String) {
+        binding.etEmail.error = message
+        binding.etPassword.error = message
     }
 
     private fun navigateToMainApp() {

@@ -23,4 +23,8 @@ class UserRepositoryImpl(
     override suspend fun deleteUser(userId: String) {
         userDao.deleteUser(userId)
     }
+
+    override suspend fun getUserByEmail(email: String): User? {
+        return userDao.getUserByEmail(email)
+    }
 }

@@ -52,7 +52,7 @@ class SignInFragment : Fragment() {
             navigateToMainApp()
         }
 
-        binding.facebook.setOnClickListener {
+        binding.email.setOnClickListener {
             findNavController().navigate(R.id.action_signInFragment_to_loginFragment)
         }
         // Или можно добавить кнопку "Skip" для тестирования

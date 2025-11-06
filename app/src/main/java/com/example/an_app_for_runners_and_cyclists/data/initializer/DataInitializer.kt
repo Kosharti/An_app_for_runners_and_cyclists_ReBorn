@@ -22,6 +22,7 @@ class DataInitializer(
                 id = userId,
                 name = "Bobby A. Munson",
                 email = "munson1450@gmail.com",
+                password = "password123", // ДОБАВЬТЕ ПАРОЛЬ
                 address = "4865 Plainfield Avenue\nSyracuse, NY 13202",
                 profileImage = null,
                 height = 180,

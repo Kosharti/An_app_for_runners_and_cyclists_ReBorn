@@ -6,12 +6,11 @@
     android:background="@drawable/sign_in_bg">
 
     <!-- Основной градиентный фон -->
-
-    <!-- Кнопка назад -->
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <!-- Кнопка назад -->
     <ImageButton
         android:id="@+id/btnBack"
         android:layout_width="24dp"
@@ -93,6 +92,15 @@
         android:layout_marginTop="495dp"
         android:fontFamily="@font/montserrat_bold" />
 
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="560dp"
+        android:visibility="gone" />
+
     <!-- Ссылка на создание аккаунта -->
     <TextView
         android:id="@+id/tvCreateAccount"
@@ -102,7 +110,7 @@
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="555dp"
+        android:layout_marginTop="600dp"
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/montserrat_regular" />
