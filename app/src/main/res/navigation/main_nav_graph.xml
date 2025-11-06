@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/runTrackingFragment">
+
+    <fragment
+        android:id="@+id/runTrackingFragment"
+        android:name="com.example.an_app_for_runners_and_cyclists.ui.RunTrackingFragment"
+        android:label="Track Run" />
+
+    <fragment
+        android:id="@+id/runHistoryFragment"
+        android:name="com.example.an_app_for_runners_and_cyclists.ui.RunHistoryFragment"
+        android:label="Run History">
+        <action
+            android:id="@+id/action_runHistoryFragment_to_runDetailsFragment"
+            app:destination="@id/runDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.an_app_for_runners_and_cyclists.ui.ProfileFragment"
+        android:label="My Profile" />
+
+    <fragment
+        android:id="@+id/otherRunnersFragment"
+        android:name="com.example.an_app_for_runners_and_cyclists.ui.OtherRunnersFragment"
+        android:label="Other Runners" />
+
+    <fragment
+        android:id="@+id/runDetailsFragment"
+        android:name="com.example.an_app_for_runners_and_cyclists.ui.RunDetailsFragment"
+        android:label="Run Details">
+        <argument
+            android:name="runId"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_profile"
+    android:padding="16dp">
+    <!-- СОЗДАТЬ DRAWABLE !!!!!
+    ic_wifi.xml
+    ic_reception.xml
+    ic_battery.xml
+    И ОСТАЛЬНЫЕ !!!!-->
+
+
+
+    <!-- Header with Back Button and Title -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp">
+
+        <!-- Back Button -->
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/arrow_back"
+            android:background="@android:color/transparent"/>
+
+        <!-- Profile Icon and Title -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_centerHorizontal="true">
+
+            <!-- Profile Icon -->
+            <ImageView
+                android:id="@+id/ic_person"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:text="person"
+                android:src="@drawable/person"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp" />
+
+            <!-- Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_toRightOf="@id/ic_person"
+                android:layout_marginLeft="5dp"
+                android:text="My Profile"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <!-- Save Button -->
+        <ImageButton
+            android:id="@+id/btn_save"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:src="@drawable/done_all"
+            android:background="@android:color/transparent"/>
+
+    </RelativeLayout>
+
+    <!-- Profile Card -->
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="2000dp"
+        android:layout_marginTop="100dp"
+
+        android:background="#251B24"
+        android:alpha="0.8"
+        android:padding="16dp">
+
+        <!-- Profile Image -->
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true">
+
+            <!-- Profile Image Background -->
+
+            <!-- Edit Camera Button -->
+            <ImageView
+                android:id="@+id/profile_img"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/profile_gradient"
+                android:contentDescription="PP"
+                android:scaleType="centerCrop"
+                android:src="@drawable/base_profile_img" />
+
+            <RelativeLayout
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/profile_gradient">
+
+                <ImageButton
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:src="@drawable/camera_alt"
+                    android:background="@android:color/transparent"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <!-- User Info -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="140dp"
+            android:orientation="vertical">
+
+            <!-- Name -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bobby A. Munson"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Address -->
+            <TextView
+                android:layout_width="119dp"
+                android:layout_height="25dp"
+                android:text="4865 Plainfield Avenue\nSyracuse, NY 13202"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:lineSpacingExtra="2dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="290dp"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/edit"
+                android:background="@android:color/transparent"/>
+
+        </LinearLayout>
+        <!-- Stats -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="430dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <!-- Distance -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:id="@+id/icon_distance"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:src="@drawable/location_on" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="16dp"
+                    android:layout_below="@id/icon_distance"
+
+                    android:layout_centerHorizontal="true"
+                    android:text="15 km"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+            <!-- Duration -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/icon_duration"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:src="@drawable/alarm" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="16dp"
+                    android:layout_below="@id/icon_duration"
+                    android:layout_centerHorizontal="true"
+                    android:text="02:50:51"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+            <!-- Calories -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/icon_calories"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:src="@drawable/flash_on" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="16dp"
+                    android:layout_below="@id/icon_calories"
+                    android:layout_centerHorizontal="true"
+                    android:text="1540 kCal"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Username -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="8dp"
+                    android:alpha="0.8"
+                    android:background="#251B24"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="14dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Choose your username"
+                        android:textColor="#FFFFFF"
+                        android:textSize="11sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="16dp"
+                        android:alpha="0.2"
+                        android:background="#FFFFFF" />
+
+                </RelativeLayout>
+
+                <!-- Email -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="8dp"
+                    android:alpha="0.8"
+                    android:background="#251B24"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="14dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Your Email"
+                        android:textColor="#FFFFFF"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                        android:text="munson1450@gmail.com"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="16dp"
+                        android:alpha="0.2"
+                        android:background="#FFFFFF" />
+
+                </RelativeLayout>
+
+                <!-- Sign Up Method -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="8dp"
+                    android:alpha="0.8"
+                    android:background="#251B24"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="14dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Facebook Login"
+                        android:textColor="#FFFFFF"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                        android:text="Sign Up Method"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="italic" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="16dp"
+                        android:alpha="0.2"
+                        android:background="#FFFFFF" />
+
+                </RelativeLayout>
+
+                <!-- Height and Weight -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+
+                    <!-- Height -->
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="4dp"
+                        android:layout_weight="1"
+                        android:alpha="0.8"
+                        android:background="#251B24"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="14dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="sans-serif-light"
+                            android:text="Enter height"
+                            android:textColor="#FFFFFF"
+                            android:textSize="11sp" />
+
+                        <View
+                            android:layout_width="96dp"
+                            android:layout_height="1dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="16dp"
+                            android:alpha="0.2"
+                            android:background="#FFFFFF" />
+
+                    </RelativeLayout>
+
+                    <!-- Weight -->
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_weight="1"
+                        android:alpha="0.8"
+                        android:background="#251B24"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="14dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="sans-serif-light"
+                            android:text="Enter weight"
+                            android:textColor="#FFFFFF"
+                            android:textSize="11sp" />
+
+                        <View
+                            android:layout_width="96dp"
+                            android:layout_height="1dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="16dp"
+                            android:alpha="0.2"
+                            android:background="#FFFFFF" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <!-- Reason for Running -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="8dp"
+                    android:alpha="0.8"
+                    android:background="#251B24"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="14dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Reason for running"
+                        android:textColor="#FFFFFF"
+                        android:textSize="11sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="16dp"
+                        android:alpha="0.2"
+                        android:background="#FFFFFF" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+    <!-- Input Fields -->
+
+</RelativeLayout>

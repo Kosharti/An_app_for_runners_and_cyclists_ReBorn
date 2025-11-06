@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_profile">
+
+    <!-- Background Image with Gradient?? -->
+
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="25dp"
+        android:background="#251B24"
+        android:alpha="0.8"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <TextView
+            android:id="@+id/iconHistory"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:text="@string/icon_history"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:fontFamily="@font/material_icons" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Run History"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat" />
+
+        <!-- Empty space for balance -->
+        <View
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+
+    </LinearLayout>
+
+    <!-- Run History List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRunHistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="85dp"
+        android:padding="16dp"
+        android:clipToPadding="false" />
+
+</RelativeLayout>

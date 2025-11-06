@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">An_app_for_runners_and_cyclists</string>
+    <string name="icon_history">history</string>
+    <string name="icon_location">location_on</string>
+    <string name="icon_alarm">alarm</string>
+    <string name="icon_flash">flash_on</string>
+    <string name="icon_expand_more">keyboard_arrow_down</string>
+    <string name="expand_collapse">Expand/Collapse</string>
+</resources>

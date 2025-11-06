@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sign_in_bg">
+
+    <!-- Основной градиентный фон -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Логотип RUNNERS XCHANGE -->
+    <ImageView
+        android:layout_width="132dp"
+        android:layout_height="62dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="412dp"
+        android:src="@drawable/logo"
+        android:scaleType="fitCenter" />
+
+    <!-- Текст "Login With" -->
+    <TextView
+        android:id="@+id/tvLoginWith"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login With"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="494dp"
+        android:fontFamily="@font/montserrat_regular" />
+
+    <!-- Социальные кнопки -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="533dp"
+        android:orientation="horizontal">
+
+
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/facebook"
+            android:background="@android:color/transparent"
+            android:layout_marginEnd="20dp"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/google"
+            android:background="@android:color/transparent"
+            android:layout_marginEnd="20dp"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/email"
+            android:background="@android:color/transparent"/>
+
+    </LinearLayout>
+
+    <!-- Разделитель "Or" -->
+    <TextView
+        android:id="@+id/tvOr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Or"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="601dp"
+        android:fontFamily="@font/montserrat_regular" />
+
+    <!-- Линия под "Or" -->
+    <View
+        android:id="@+id/viewDivider"
+        android:layout_width="50dp"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="621dp" />
+
+    <!-- Кнопка создания аккаунта -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCreateAccount"
+        android:layout_width="205dp"
+        android:layout_height="45dp"
+        android:text="Create a New Account"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:backgroundTint="#FB7445"
+        app:cornerRadius="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="640dp"
+        android:fontFamily="@font/montserrat_bold" />
+
+
+</RelativeLayout>
