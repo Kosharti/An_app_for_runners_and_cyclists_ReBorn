@@ -16,4 +16,5 @@
     <color name="orange_light">#FB7445</color>
     <color name="text_primary">#FFFFFF</color>
     <color name="text_hint">#99FFFFFF</color>
+    <color name="transparent_dark">#E6000000</color>
 </resources>

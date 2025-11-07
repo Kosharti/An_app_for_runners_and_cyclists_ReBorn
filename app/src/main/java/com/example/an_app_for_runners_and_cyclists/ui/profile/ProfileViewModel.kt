@@ -28,9 +28,9 @@ class ProfileViewModel(
 
     private fun loadCurrentUser() {
         viewModelScope.launch {
-            // Используем нового пользователя из сессии
-            val currentUser = userRepository.getCurrentUser()
-            _user.value = currentUser
+            userRepository.getCurrentUser()?.let { currentUser ->
+                _user.value = currentUser
+            }
         }
     }
 
@@ -38,9 +38,22 @@ class ProfileViewModel(
         _isEditing.value = true
     }
 
-    fun saveUser(updatedUser: User) {
-        if (!validateUserData(updatedUser)) {
-            _saveState.value = SaveState.Error("Please fill all required fields correctly")
+    fun saveUserData(
+        name: String,
+        email: String,
+        height: Int?,
+        weight: Int?,
+        runningReason: String
+    ) {
+        val currentUser = _user.value ?: return
+
+        if (name.isEmpty() || email.isEmpty()) {
+            _saveState.value = SaveState.Error("Name and email are required")
+            return
+        }
+
+        if (!isValidEmail(email)) {
+            _saveState.value = SaveState.Error("Please enter a valid email")
             return
         }
 
@@ -48,12 +61,20 @@ class ProfileViewModel(
 
         viewModelScope.launch {
             try {
+                val updatedUser = currentUser.copy(
+                    name = name,
+                    email = email,
+                    height = height,
+                    weight = weight,
+                    runningReason = runningReason
+                )
+
                 userRepository.updateUser(updatedUser)
                 _user.value = updatedUser
                 _isEditing.value = false
                 _saveState.value = SaveState.Success
             } catch (e: Exception) {
-                _saveState.value = SaveState.Error("Failed to save: ${e.message}")
+                _saveState.value = SaveState.Error("Failed to save profile: ${e.message}")
             }
         }
     }
@@ -63,36 +84,17 @@ class ProfileViewModel(
         _saveState.value = SaveState.Idle
     }
 
-    private fun validateUserData(user: User): Boolean {
-        return when {
-            user.name.isBlank() -> false
-            user.email.isBlank() || !isValidEmail(user.email) -> false
-            user.height == null || user.height <= 0 -> false
-            user.weight == null || user.weight <= 0 -> false
-            user.runningReason.isNullOrBlank() -> false
-            else -> true
-        }
-    }
-
     private fun isValidEmail(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    private fun createDefaultUser(userId: String): User {
-        return User(
-            id = userId,
-            name = "Bobby A. Munson",
-            email = "munson1450@gmail.com",
-            password = "password123", // ДОБАВЬТЕ ЭТУ СТРОЧКУ
-            address = "4865 Plainfield Avenue\nSyracuse, NY 13202",
-            profileImage = null,
-            height = 180,
-            weight = 75,
-            runningReason = "Fitness and health",
-            totalDistance = 15f,
-            totalTime = 10251L, // 2:50:51 in seconds
-            totalCalories = 1540
-        )
+    fun updateProfileImage(imageUri: String) {
+        viewModelScope.launch {
+            val currentUser = _user.value ?: return@launch
+            val updatedUser = currentUser.copy(profileImage = imageUri)
+            userRepository.updateUser(updatedUser)
+            _user.value = updatedUser
+        }
     }
 
     sealed class SaveState {
