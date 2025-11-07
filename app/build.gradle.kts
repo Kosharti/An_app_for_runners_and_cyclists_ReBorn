@@ -76,6 +76,8 @@ dependencies {
 
     implementation("javax.inject:javax.inject:1")
 
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

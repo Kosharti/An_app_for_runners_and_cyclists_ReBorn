@@ -26,6 +26,7 @@ import com.example.an_app_for_runners_and_cyclists.utils.RunCalculator
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -99,12 +100,10 @@ class ProfileFragment : Fragment() {
         val popup = PopupMenu(requireContext(), binding.menuIcon)
         popup.menuInflater.inflate(R.menu.main_dropdown_menu, popup.menu)
 
-        // Устанавливаем тёмный фон для меню
+        // Устанавливаем стиль для текста в меню
         try {
-            val field = popup.javaClass.getDeclaredField("mPopup")
-            field.isAccessible = true
-            val popupWindow = field.get(popup) as android.widget.PopupWindow
-            popupWindow.setBackgroundDrawable(resources.getDrawable(R.drawable.menu_background, null))
+            // Для Android API 29+
+            popup.setForceShowIcon(true)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -127,7 +126,20 @@ class ProfileFragment : Fragment() {
                 else -> false
             }
         }
+
+        // Показываем меню
         popup.show()
+
+        // Устанавливаем цвет текста программно для всех пунктов меню
+        try {
+            val popupMenu = popup::class.java.getDeclaredField("mPopup")
+            popupMenu.isAccessible = true
+            val menu = popupMenu.get(popup)
+            menu.javaClass.getDeclaredMethod("setForceShowIcon", Boolean::class.java)
+                .invoke(menu, true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun setupClickListeners() {
@@ -221,9 +233,32 @@ class ProfileFragment : Fragment() {
     }
 
     private fun handleImageSelection(uri: Uri) {
-        viewModel.updateProfileImage(uri.toString())
-        // Показываем изображение сразу
-        binding.profileImg.setImageURI(uri)
+        // Для фото с камеры используем путь к файлу, для галереи - content URI
+        val imagePath = if (uri.scheme == "file") {
+            uri.path ?: uri.toString()
+        } else {
+            uri.toString()
+        }
+
+        viewModel.updateProfileImage(imagePath)
+
+        // Показываем изображение сразу с правильным URI
+        try {
+            if (uri.scheme == "content") {
+                // Для content URI используем напрямую
+                binding.profileImg.setImageURI(uri)
+            } else {
+                // Для file URI создаем File и затем URI
+                val file = File(uri.path ?: return)
+                if (file.exists()) {
+                    val fileUri = Uri.fromFile(file)
+                    binding.profileImg.setImageURI(fileUri)
+                }
+            }
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to set temporary profile image")
+        }
+
         Snackbar.make(binding.root, "Profile photo updated", Snackbar.LENGTH_SHORT).show()
     }
 
@@ -233,13 +268,14 @@ class ProfileFragment : Fragment() {
         val height = binding.etHeight.text.toString().toIntOrNull()
         val weight = binding.etWeight.text.toString().toIntOrNull()
         val runningReason = binding.etRunningReason.text.toString().trim()
+        val address = binding.etAddress.text.toString().trim() // ДОБАВЬТЕ ЭТУ СТРОЧКУ
 
         if (name.isEmpty() || email.isEmpty()) {
             Snackbar.make(binding.root, "Please fill name and email", Snackbar.LENGTH_SHORT).show()
             return
         }
 
-        viewModel.saveUserData(name, email, height, weight, runningReason)
+        viewModel.saveUserData(name, email, height, weight, runningReason, address) // ОБНОВИТЕ ВЫЗОВ
     }
 
     private fun observeViewModel() {
@@ -281,10 +317,14 @@ class ProfileFragment : Fragment() {
         if (editing) {
             binding.btnSave.visibility = View.VISIBLE
             binding.btnEdit.visibility = View.GONE
+            binding.tvUserAddress.visibility = View.GONE
+            binding.tilAddress.visibility = View.VISIBLE
             enableEditing(true)
         } else {
             binding.btnSave.visibility = View.GONE
             binding.btnEdit.visibility = View.VISIBLE
+            binding.tvUserAddress.visibility = View.VISIBLE
+            binding.tilAddress.visibility = View.GONE
             enableEditing(false)
         }
     }
@@ -299,6 +339,7 @@ class ProfileFragment : Fragment() {
         binding.etHeight.isEnabled = editable
         binding.etWeight.isEnabled = editable
         binding.etRunningReason.isEnabled = editable
+        binding.etAddress.isEnabled = editable // ДОБАВЬТЕ ЭТУ СТРОЧКУ
     }
 
     private fun updateUI(user: com.example.an_app_for_runners_and_cyclists.data.model.User) {
@@ -312,16 +353,31 @@ class ProfileFragment : Fragment() {
         binding.etHeight.setText(user.height?.toString() ?: "")
         binding.etWeight.setText(user.weight?.toString() ?: "")
         binding.etRunningReason.setText(user.runningReason ?: "")
+        binding.etAddress.setText(user.address ?: "")
 
         // Обновляем фото профиля
-        user.profileImage?.let { imageUri ->
+        user.profileImage?.let { imagePath ->
             try {
-                val uri = Uri.parse(imageUri)
-                binding.profileImg.setImageURI(uri)
+                // Проверяем, является ли путь абсолютным путем к файлу
+                if (imagePath.startsWith("/") && File(imagePath).exists()) {
+                    // Это путь к файлу во внутреннем хранилище
+                    val file = File(imagePath)
+                    val uri = Uri.fromFile(file)
+                    binding.profileImg.setImageURI(uri)
+                    Timber.d("Profile image loaded from internal storage: $imagePath")
+                } else {
+                    // Пытаемся загрузить как URI (для обратной совместимости)
+                    val uri = Uri.parse(imagePath)
+                    binding.profileImg.setImageURI(uri)
+                    Timber.d("Profile image loaded as URI: $imagePath")
+                }
             } catch (e: Exception) {
-                // Если не удалось загрузить фото, оставляем стандартное
+                Timber.e(e, "Failed to load profile image: $imagePath")
                 binding.profileImg.setImageResource(R.drawable.base_profile_img)
             }
+        } ?: run {
+            // Если фото нет, устанавливаем заглушку
+            binding.profileImg.setImageResource(R.drawable.base_profile_img)
         }
 
         // Обновляем статистику

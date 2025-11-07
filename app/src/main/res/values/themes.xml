@@ -12,6 +12,10 @@
         <item name="android:textColorPrimary">#FFFFFF</item>
         <item name="android:textColorSecondary">#CCFFFFFF</item>
         <item name="colorOnSurface">#FFFFFF</item>
+
+        <!-- ДОБАВЬТЕ ЭТИ СТРОЧКИ ДЛЯ POPUP MENU -->
+        <item name="popupMenuStyle">@style/PopupMenuStyle</item>
+        <item name="android:popupMenuStyle">@style/PopupMenuStyle</item>
     </style>
 
     <style name="OutlinedTextField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -34,9 +38,11 @@
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
-    <style name="PopupMenuStyle" parent="ThemeOverlay.AppCompat.Dark">
-        <item name="android:colorBackground">@color/transparent_dark</item>
-        <item name="android:background">@drawable/menu_background</item>
+    <!-- ОБНОВЛЁННЫЙ СТИЛЬ ДЛЯ POPUP MENU -->
+    <style name="PopupMenuStyle" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/menu_background</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
     </style>
 
     <style name="Theme.RunnersExchange" parent="Base.Theme.RunnersExchange" />

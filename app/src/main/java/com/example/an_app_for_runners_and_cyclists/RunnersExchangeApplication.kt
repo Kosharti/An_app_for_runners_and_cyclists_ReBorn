@@ -1,6 +1,7 @@
 package com.example.an_app_for_runners_and_cyclists
 
 import android.app.Application
+import android.content.Context
 import com.example.an_app_for_runners_and_cyclists.data.initializer.DataInitializer
 import com.example.an_app_for_runners_and_cyclists.data.local.RunDatabase
 import com.example.an_app_for_runners_and_cyclists.data.repository.RunRepositoryImpl
@@ -12,21 +13,30 @@ import timber.log.Timber
 
 class RunnersExchangeApplication : Application() {
 
+    companion object {
+        private var instance: RunnersExchangeApplication? = null
+
+        fun getAppContext(): Context? = instance?.applicationContext
+    }
+
     val database: RunDatabase by lazy {
         RunDatabase.getInstance(this)
     }
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
 
+        Timber.d("Application started")
+
         // Initialize data
         val userRepository = UserRepositoryImpl(
             userDao = database.userDao(),
-            context = this // ДОБАВЬТЕ ЭТУ СТРОЧКУ
+            context = this
         )
         val runRepository = RunRepositoryImpl(database.runDao())
         val dataInitializer = DataInitializer(userRepository, runRepository)

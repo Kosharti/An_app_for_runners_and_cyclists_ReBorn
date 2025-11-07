@@ -83,11 +83,9 @@
 
     <!-- Profile Card -->
     <RelativeLayout
-
         android:layout_width="match_parent"
         android:layout_height="2000dp"
         android:layout_marginTop="100dp"
-
         android:background="#251B24"
         android:alpha="0.8"
         android:padding="16dp">
@@ -99,42 +97,39 @@
             android:layout_alignParentLeft="true">
 
             <!-- Profile Image Background -->
-
-            <!-- Edit Camera Button -->
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_img"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/profile_gradient"
-                android:contentDescription="PP"
+                android:contentDescription="Profile picture"
                 android:scaleType="centerCrop"
                 android:src="@drawable/base_profile_img" />
 
-            <RelativeLayout
+            <!-- Кнопка камеры тоже круглая -->
+            <ImageButton
                 android:id="@+id/btnCamera"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/profile_gradient">
-
-                <ImageButton
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
-                    android:src="@drawable/camera_alt"
-                    android:background="@android:color/transparent"/>
-
-            </RelativeLayout>
+                android:background="@drawable/camera_button_background"
+                android:src="@drawable/camera_alt"
+                android:scaleType="centerInside"
+                android:padding="4dp"
+                android:clickable="true"
+                android:focusable="true"/>
 
         </RelativeLayout>
 
         <!-- User Info -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="140dp"
+            android:layout_toRightOf="@id/profile_img"
+            android:layout_toLeftOf="@+id/btnEdit"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:orientation="vertical">
 
             <!-- Name -->
@@ -148,39 +143,62 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="4dp" />
 
-            <!-- Address -->
+            <!-- Address Display -->
             <TextView
                 android:id="@+id/tvUserAddress"
-                android:layout_width="119dp"
-                android:layout_height="25dp"
-                android:text=""
-                android:textColor="#FFFFFF"
-                android:textSize="10sp"
-                android:lineSpacingExtra="2dp" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address not set"
+                android:textColor="#CCFFFFFF"
+                android:textSize="12sp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginBottom="8dp" />
+
+            <!-- TextInputLayout для адреса в режиме редактирования -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                style="@style/OutlinedTextField"
+                app:startIconDrawable="@drawable/location_on">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Address"
+                    android:text=""
+                    android:maxLines="3"
+                    android:inputType="textMultiLine|textPostalAddress"
+                    android:textColor="#FFFFFF" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/btnEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="290dp"
-            android:orientation="vertical">
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/profile_img"
+            app:srcCompat="@drawable/edit"
+            android:background="@android:color/transparent"/>
 
-            <ImageButton
-                android:id="@+id/btnEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/edit"
-                android:background="@android:color/transparent"/>
-
-        </LinearLayout>
         <!-- Stats -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
+
+            android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="105dp"
             android:layout_marginBottom="430dp"
-            android:gravity="center"
             android:orientation="horizontal">
 
             <!-- Distance -->
@@ -191,9 +209,9 @@
                 android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/icon_distance"
                     android:layout_width="13dp"
                     android:layout_height="13dp"
-                    android:id="@+id/icon_distance"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
                     android:src="@drawable/location_on" />
@@ -268,6 +286,7 @@
 
         <!-- Заменяем весь ScrollView и его содержимое на: -->
         <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp">
@@ -280,10 +299,10 @@
                 <!-- Username -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilUserName"
+                    style="@style/OutlinedTextField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    style="@style/OutlinedTextField"
                     app:startIconDrawable="@drawable/person_sign_up">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -299,10 +318,10 @@
                 <!-- Email -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilEmail"
+                    style="@style/OutlinedTextField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    style="@style/OutlinedTextField"
                     app:startIconDrawable="@drawable/email_icon">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -310,8 +329,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Email"
-                        android:text="munson1450@gmail.com"
                         android:inputType="textEmailAddress"
+                        android:text="munson1450@gmail.com"
                         android:textColor="#FFFFFF" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -325,11 +344,11 @@
                     <!-- Height -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilHeight"
+                        style="@style/OutlinedTextField"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginEnd="4dp"
-                        style="@style/OutlinedTextField"
+                        android:layout_weight="1"
                         app:startIconDrawable="@drawable/height_icon">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -337,8 +356,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Height (cm)"
-                            android:text="180"
                             android:inputType="number"
+                            android:text="180"
                             android:textColor="#FFFFFF" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -346,11 +365,11 @@
                     <!-- Weight -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilWeight"
+                        style="@style/OutlinedTextField"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginStart="4dp"
-                        style="@style/OutlinedTextField"
+                        android:layout_weight="1"
                         app:startIconDrawable="@drawable/weight_icon">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -358,8 +377,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Weight (kg)"
-                            android:text="75"
                             android:inputType="number"
+                            android:text="75"
                             android:textColor="#FFFFFF" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -369,10 +388,10 @@
                 <!-- Running Reason -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilRunningReason"
+                    style="@style/OutlinedTextField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    style="@style/OutlinedTextField"
                     app:startIconDrawable="@drawable/goal_icon">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -389,7 +408,5 @@
         </ScrollView>
 
     </RelativeLayout>
-
-    <!-- Input Fields -->
 
 </RelativeLayout>
