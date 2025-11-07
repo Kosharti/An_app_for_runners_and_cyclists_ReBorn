@@ -9,6 +9,9 @@ interface UserDao {
     @Query("SELECT * FROM users WHERE id = :userId")
     fun getUser(userId: String): Flow<User?>
 
+    @Query("SELECT * FROM users WHERE email = :email") // ДОБАВЬТЕ ЭТОТ МЕТОД
+    suspend fun getUserByEmail(email: String): User?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: User)
 
@@ -17,7 +20,4 @@ interface UserDao {
 
     @Query("DELETE FROM users WHERE id = :userId")
     suspend fun deleteUser(userId: String)
-
-    @Query("SELECT * FROM users WHERE email = :email")
-    suspend fun getUserByEmail(email: String): User?
 }

@@ -8,7 +8,7 @@ data class User(
     @PrimaryKey val id: String,
     val name: String,
     val email: String,
-    val password: String, // ДОБАВЬТЕ ЭТУ СТРОЧКУ
+    val password: String, // ДОБАВЬТЕ ЭТО ПОЛЕ
     val profileImage: String? = null,
     val address: String? = null,
     val height: Int? = null,

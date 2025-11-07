@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.an_app_for_runners_and_cyclists.data.model.Run
 import com.example.an_app_for_runners_and_cyclists.data.repository.RunRepository
+import com.example.an_app_for_runners_and_cyclists.data.repository.UserRepository
 import com.example.an_app_for_runners_and_cyclists.utils.RunCalculator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +15,8 @@ import java.util.Calendar
 import java.util.Locale
 
 class RunHistoryViewModel(
-    private val runRepository: RunRepository
+    private val runRepository: RunRepository,
+    private val userRepository: UserRepository // ДОБАВЬТЕ ЭТОТ ПАРАМЕТР
 ) : ViewModel() {
 
     private val _runs = MutableStateFlow<List<Run>>(emptyList())
@@ -34,14 +36,15 @@ class RunHistoryViewModel(
     }
 
     private fun loadRuns() {
-        // For now, using hardcoded user ID. In real app, get from auth
-        val userId = "user1"
-
         viewModelScope.launch {
-            runRepository.getAllRuns(userId).collect { runsList ->
-                _runs.value = runsList
-                groupRunsByMonth(runsList)
-                calculateTotalStats(runsList)
+            // Получаем текущего пользователя
+            val currentUser = userRepository.getCurrentUser()
+            if (currentUser != null) {
+                runRepository.getAllRuns(currentUser.id).collect { runsList ->
+                    _runs.value = runsList
+                    groupRunsByMonth(runsList)
+                    calculateTotalStats(runsList)
+                }
             }
         }
     }

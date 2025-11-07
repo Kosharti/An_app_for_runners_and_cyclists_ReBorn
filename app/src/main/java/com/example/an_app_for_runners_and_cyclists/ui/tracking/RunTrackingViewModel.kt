@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.an_app_for_runners_and_cyclists.data.model.LatLng
 import com.example.an_app_for_runners_and_cyclists.data.model.Run
 import com.example.an_app_for_runners_and_cyclists.data.repository.RunRepository
+import com.example.an_app_for_runners_and_cyclists.data.repository.UserRepository
 import com.example.an_app_for_runners_and_cyclists.utils.RunCalculator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +16,8 @@ import java.util.UUID
 
 class RunTrackingViewModel(
     application: Application,
-    private val runRepository: RunRepository
+    private val runRepository: RunRepository,
+    private val userRepository: UserRepository // ДОБАВЬТЕ ЭТОТ ПАРАМЕТР
 ) : AndroidViewModel(application) {
 
     private val _trackingState = MutableStateFlow(TrackingState.IDLE)
@@ -100,21 +102,24 @@ class RunTrackingViewModel(
 
     private fun saveRun() {
         viewModelScope.launch {
-            val run = Run(
-                id = UUID.randomUUID().toString(),
-                userId = "user1", // Hardcoded for now
-                startTime = startTime,
-                endTime = System.currentTimeMillis(),
-                distance = _distance.value,
-                duration = _elapsedTime.value,
-                calories = _calories.value,
-                pace = _pace.value,
-                coordinates = trackedLocations,
-                weatherCondition = _weatherInfo.value.condition,
-                temperature = _weatherInfo.value.temperature,
-                averageHeartRate = _heartRate.value
-            )
-            runRepository.saveRun(run)
+            val currentUser = userRepository.getCurrentUser()
+            if (currentUser != null) {
+                val run = Run(
+                    id = UUID.randomUUID().toString(),
+                    userId = currentUser.id, // ИСПОЛЬЗУЕМ ID ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ
+                    startTime = startTime,
+                    endTime = System.currentTimeMillis(),
+                    distance = _distance.value,
+                    duration = _elapsedTime.value,
+                    calories = _calories.value,
+                    pace = _pace.value,
+                    coordinates = trackedLocations,
+                    weatherCondition = _weatherInfo.value.condition,
+                    temperature = _weatherInfo.value.temperature,
+                    averageHeartRate = _heartRate.value
+                )
+                runRepository.saveRun(run)
+            }
         }
     }
 

@@ -9,4 +9,10 @@ interface UserRepository {
     suspend fun updateUser(user: User)
     suspend fun deleteUser(userId: String)
     suspend fun getUserByEmail(email: String): User?
+
+    // Новые методы для управления сессией
+    suspend fun login(email: String, password: String): User?
+    suspend fun getCurrentUser(): User?
+    fun logout()
+    suspend fun isLoggedIn(): Boolean
 }

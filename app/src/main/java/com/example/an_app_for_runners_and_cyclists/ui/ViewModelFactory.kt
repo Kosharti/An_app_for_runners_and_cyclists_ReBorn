@@ -20,17 +20,26 @@ class ViewModelFactory(private val application: RunnersExchangeApplication) : Vi
     }
 
     private val userRepository: UserRepository by lazy {
-        UserRepositoryImpl(application.database.userDao())
+        UserRepositoryImpl(
+            userDao = application.database.userDao(),
+            context = application.applicationContext // ДОБАВЬТЕ ЭТУ СТРОЧКУ!
+        )
     }
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
+            modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
+                LoginViewModel(userRepository) as T
+            }
+            modelClass.isAssignableFrom(SignUpViewModel::class.java) -> {
+                SignUpViewModel(userRepository) as T
+            }
             modelClass.isAssignableFrom(RunTrackingViewModel::class.java) -> {
-                RunTrackingViewModel(application, runRepository) as T
+                RunTrackingViewModel(application, runRepository, userRepository) as T // ДОБАВЬТЕ userRepository
             }
             modelClass.isAssignableFrom(RunHistoryViewModel::class.java) -> {
-                RunHistoryViewModel(runRepository) as T
+                RunHistoryViewModel(runRepository, userRepository) as T // ДОБАВЬТЕ userRepository
             }
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
                 ProfileViewModel(userRepository) as T
@@ -40,9 +49,6 @@ class ViewModelFactory(private val application: RunnersExchangeApplication) : Vi
             }
             modelClass.isAssignableFrom(RunDetailsViewModel::class.java) -> {
                 RunDetailsViewModel(runRepository) as T
-            }
-            modelClass.isAssignableFrom(SignUpViewModel::class.java) -> {
-                SignUpViewModel(userRepository) as T
             }
             else -> {
                 throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

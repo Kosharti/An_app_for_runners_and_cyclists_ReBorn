@@ -6,11 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.an_app_for_runners_and_cyclists.R
 import com.example.an_app_for_runners_and_cyclists.RunnersExchangeApplication
+import com.example.an_app_for_runners_and_cyclists.SignInActivity
+import com.example.an_app_for_runners_and_cyclists.data.model.User
 import com.example.an_app_for_runners_and_cyclists.databinding.FragmentSignUpBinding
 import com.example.an_app_for_runners_and_cyclists.ui.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class SignUpFragment : Fragment() {
 
@@ -33,6 +39,7 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
+        observeViewModel()
     }
 
     private fun setupClickListeners() {
@@ -42,31 +49,11 @@ class SignUpFragment : Fragment() {
             val password = binding.etPassword.text?.toString()
 
             if (name.isNullOrEmpty() || email.isNullOrEmpty() || password.isNullOrEmpty()) {
-                // Показываем ошибку
+                showError("Please fill all fields")
                 return@setOnClickListener
             }
 
-            // Показываем прогресс
-            binding.progressBar.visibility = View.VISIBLE
-            binding.btnSubmit.isEnabled = false
-
-            viewModel.createUser(
-                name = name,
-                email = email,
-                password = password,
-                onSuccess = {
-                    // Успешная регистрация - переходим к основному приложению
-                    binding.progressBar.visibility = View.GONE
-                    binding.btnSubmit.isEnabled = true
-                    navigateToMainApp()
-                },
-                onError = { errorMessage ->
-                    // Показываем ошибку
-                    binding.progressBar.visibility = View.GONE
-                    binding.btnSubmit.isEnabled = true
-                    // TODO: Показать Snackbar или Toast с ошибкой
-                }
-            )
+            viewModel.createUser(name, email, password)
         }
 
         binding.btnBack.setOnClickListener {
@@ -74,9 +61,49 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun navigateToMainApp() {
-        (requireActivity() as? com.example.an_app_for_runners_and_cyclists.SignInActivity)
-            ?.navigateToMainApp()
+    private fun observeViewModel() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.signUpState.collectLatest { state ->
+                when (state) {
+                    is SignUpViewModel.SignUpState.Idle -> {
+                        hideProgress()
+                    }
+                    is SignUpViewModel.SignUpState.Loading -> {
+                        showProgress()
+                    }
+                    is SignUpViewModel.SignUpState.Success -> {
+                        hideProgress()
+                        navigateToMainApp(state.user)
+                    }
+                    is SignUpViewModel.SignUpState.Error -> {
+                        hideProgress()
+                        showError(state.message)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showError(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
+            .setAction("OK") { }
+            .setBackgroundTint(resources.getColor(android.R.color.holo_red_dark, null))
+            .show()
+    }
+
+
+    private fun showProgress() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.btnSubmit.isEnabled = false
+    }
+
+    private fun hideProgress() {
+        binding.progressBar.visibility = View.GONE
+        binding.btnSubmit.isEnabled = true
+    }
+
+    private fun navigateToMainApp(user: User) {
+        (requireActivity() as? SignInActivity)?.navigateToMainApp()
     }
 
     override fun onDestroyView() {

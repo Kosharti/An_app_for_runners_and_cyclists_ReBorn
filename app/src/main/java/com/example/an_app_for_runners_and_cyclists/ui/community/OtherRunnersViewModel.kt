@@ -25,6 +25,7 @@ class OtherRunnersViewModel : ViewModel() {
                     id = "2",
                     name = "John Doe",
                     email = "john@example.com",
+                    password = "password123", // ДОБАВЬТЕ ЭТУ СТРОЧКУ
                     address = "123 Main St, New York, NY",
                     totalDistance = 25.5f,
                     totalTime = 15000L,
@@ -34,6 +35,7 @@ class OtherRunnersViewModel : ViewModel() {
                     id = "3",
                     name = "Jane Smith",
                     email = "jane@example.com",
+                    password = "password123", // ДОБАВЬТЕ ЭТУ СТРОЧКУ
                     address = "456 Oak Ave, Los Angeles, CA",
                     totalDistance = 18.7f,
                     totalTime = 12000L,
@@ -43,6 +45,7 @@ class OtherRunnersViewModel : ViewModel() {
                     id = "4",
                     name = "Mike Johnson",
                     email = "mike@example.com",
+                    password = "password123", // ДОБАВЬТЕ ЭТУ СТРОЧКУ
                     address = "789 Pine Rd, Chicago, IL",
                     totalDistance = 32.1f,
                     totalTime = 18000L,

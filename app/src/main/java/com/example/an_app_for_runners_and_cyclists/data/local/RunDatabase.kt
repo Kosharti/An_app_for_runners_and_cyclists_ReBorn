@@ -26,7 +26,9 @@ abstract class RunDatabase : RoomDatabase() {
                     context.applicationContext,
                     RunDatabase::class.java,
                     "run_database"
-                ).build()
+                )
+                //.fallbackToDestructiveMigration()
+                .build()
                 INSTANCE = instance
                 instance
             }

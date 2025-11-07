@@ -24,7 +24,10 @@ class RunnersExchangeApplication : Application() {
         }
 
         // Initialize data
-        val userRepository = UserRepositoryImpl(database.userDao())
+        val userRepository = UserRepositoryImpl(
+            userDao = database.userDao(),
+            context = this // ДОБАВЬТЕ ЭТУ СТРОЧКУ
+        )
         val runRepository = RunRepositoryImpl(database.runDao())
         val dataInitializer = DataInitializer(userRepository, runRepository)
 
