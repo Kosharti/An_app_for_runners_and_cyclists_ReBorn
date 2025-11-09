@@ -317,14 +317,10 @@ class ProfileFragment : Fragment() {
         if (editing) {
             binding.btnSave.visibility = View.VISIBLE
             binding.btnEdit.visibility = View.GONE
-            binding.tvUserAddress.visibility = View.GONE
-            binding.tilAddress.visibility = View.VISIBLE
             enableEditing(true)
         } else {
             binding.btnSave.visibility = View.GONE
             binding.btnEdit.visibility = View.VISIBLE
-            binding.tvUserAddress.visibility = View.VISIBLE
-            binding.tilAddress.visibility = View.GONE
             enableEditing(false)
         }
     }
@@ -339,13 +335,12 @@ class ProfileFragment : Fragment() {
         binding.etHeight.isEnabled = editable
         binding.etWeight.isEnabled = editable
         binding.etRunningReason.isEnabled = editable
-        binding.etAddress.isEnabled = editable // ДОБАВЬТЕ ЭТУ СТРОЧКУ
+        binding.etAddress.isEnabled = editable
     }
 
     private fun updateUI(user: com.example.an_app_for_runners_and_cyclists.data.model.User) {
-        // Обновляем верхнюю часть с именем и адресом
+        // Обновляем верхнюю часть с именем
         binding.tvUserName.text = user.name
-        binding.tvUserAddress.text = user.address ?: "Address not set"
 
         // Обновляем поля ввода
         binding.etUserName.setText(user.name)

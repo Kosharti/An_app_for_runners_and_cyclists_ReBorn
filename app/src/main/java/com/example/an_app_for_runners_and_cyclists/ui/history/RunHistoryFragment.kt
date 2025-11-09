@@ -118,3 +118,4 @@ class RunHistoryFragment : Fragment() {
         _binding = null
     }
 }
+

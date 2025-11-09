@@ -126,8 +126,8 @@
         <LinearLayout
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/profile_img"
-            android:layout_toLeftOf="@+id/btnEdit"
+            android:layout_toRightOf="@+id/profile_img"
+            android:layout_toStartOf="@+id/btnEdit"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:orientation="vertical">
@@ -143,47 +143,13 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="4dp" />
 
-            <!-- Address Display -->
-            <TextView
-                android:id="@+id/tvUserAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Address not set"
-                android:textColor="#CCFFFFFF"
-                android:textSize="12sp"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:layout_marginBottom="8dp" />
-
-            <!-- TextInputLayout для адреса в режиме редактирования -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:visibility="gone"
-                style="@style/OutlinedTextField"
-                app:startIconDrawable="@drawable/location_on">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Address"
-                    android:text=""
-                    android:maxLines="3"
-                    android:inputType="textMultiLine|textPostalAddress"
-                    android:textColor="#FFFFFF" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
         </LinearLayout>
 
         <ImageButton
             android:id="@+id/btnEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignTop="@id/profile_img"
             app:srcCompat="@drawable/edit"
             android:background="@android:color/transparent"/>
@@ -192,8 +158,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
@@ -284,7 +248,7 @@
 
         </LinearLayout>
 
-        <!-- Заменяем весь ScrollView и его содержимое на: -->
+        <!-- ScrollView -->
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
@@ -331,6 +295,27 @@
                         android:hint="Email"
                         android:inputType="textEmailAddress"
                         android:text="munson1450@gmail.com"
+                        android:textColor="#FFFFFF" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Address -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilAddress"
+                    style="@style/OutlinedTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    app:startIconDrawable="@drawable/location_on">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Address"
+                        android:text=""
+                        android:maxLines="3"
+                        android:inputType="textMultiLine|textPostalAddress"
                         android:textColor="#FFFFFF" />
 
                 </com.google.android.material.textfield.TextInputLayout>
