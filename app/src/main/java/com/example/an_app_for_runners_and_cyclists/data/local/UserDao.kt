@@ -20,4 +20,10 @@ interface UserDao {
 
     @Query("DELETE FROM users WHERE id = :userId")
     suspend fun deleteUser(userId: String)
+
+    @Query("SELECT * FROM users")
+    fun getAllUsers(): Flow<List<User>>
+
+    @Query("SELECT * FROM users WHERE id != :excludeUserId")
+    fun getAllUsersExcept(excludeUserId: String): Flow<List<User>>
 }

@@ -15,4 +15,12 @@ interface UserRepository {
     suspend fun getCurrentUser(): User?
     fun logout()
     suspend fun isLoggedIn(): Boolean
+
+    // Новые методы для работы со статистикой
+    suspend fun updateUserStats(userId: String)
+    suspend fun getUsersWithStats(): Flow<List<User>>
+    suspend fun recalculateAllUsersStats()
+
+    // Новый метод для получения всех пользователей
+    suspend fun getAllUsers(): List<User>
 }

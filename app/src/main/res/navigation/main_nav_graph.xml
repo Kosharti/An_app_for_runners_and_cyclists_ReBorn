@@ -15,7 +15,14 @@
         android:id="@+id/runHistoryFragment"
         android:name="com.example.an_app_for_runners_and_cyclists.ui.history.RunHistoryFragment"
         android:label="Run History"
-        tools:layout="@layout/fragment_run_history" />
+        tools:layout="@layout/fragment_run_history">
+
+        <!-- ДОБАВЛЯЕМ ДЕЙСТВИЕ ДЛЯ ПЕРЕХОДА К ДЕТАЛЯМ ПРОБЕЖКИ -->
+        <action
+            android:id="@+id/action_runHistoryFragment_to_runDetailsFragment"
+            app:destination="@id/runDetailsFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/profileFragment"

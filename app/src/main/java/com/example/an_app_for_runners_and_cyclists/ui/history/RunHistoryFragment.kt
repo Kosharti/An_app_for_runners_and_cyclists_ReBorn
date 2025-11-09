@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.PopupMenu
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -17,7 +17,6 @@ import com.example.an_app_for_runners_and_cyclists.ui.ViewModelFactory
 import com.example.an_app_for_runners_and_cyclists.ui.history.adapter.MonthRunAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
 
 class RunHistoryFragment : Fragment() {
 
@@ -50,11 +49,14 @@ class RunHistoryFragment : Fragment() {
         monthRunAdapter = MonthRunAdapter(
             onMonthClick = { monthKey ->
                 viewModel.toggleMonthExpansion(monthKey)
+            },
+            onRunClick = { runId ->
+                navigateToRunDetails(runId)
             }
         )
 
         binding.rvRunHistory.apply {
-            layoutManager = LinearLayoutManager(requireContext()) // ДОБАВЬ ЭТУ СТРОЧКУ!
+            layoutManager = LinearLayoutManager(requireContext())
             adapter = monthRunAdapter
         }
     }
@@ -67,8 +69,11 @@ class RunHistoryFragment : Fragment() {
 
         // Обработчик иконки истории
         binding.historyIcon.setOnClickListener {
-            findNavController().navigate(R.id.runHistoryFragment)
+            // Уже в истории, ничего не делаем
         }
+
+        // Заголовок
+        binding.toolbarTitle.text = "Run History"
     }
 
     private fun showDropdownMenu() {
@@ -82,7 +87,7 @@ class RunHistoryFragment : Fragment() {
                     true
                 }
                 R.id.action_history -> {
-                    findNavController().navigate(R.id.runHistoryFragment)
+                    // Уже в истории
                     true
                 }
                 R.id.action_profile -> {
@@ -113,9 +118,13 @@ class RunHistoryFragment : Fragment() {
         }
     }
 
+    private fun navigateToRunDetails(runId: String) {
+        val action = RunHistoryFragmentDirections.actionRunHistoryFragmentToRunDetailsFragment(runId)
+        findNavController().navigate(action)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
-

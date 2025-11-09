@@ -4,11 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.an_app_for_runners_and_cyclists.data.local.UserDao
 import com.example.an_app_for_runners_and_cyclists.data.model.User
+import com.example.an_app_for_runners_and_cyclists.utils.StatisticsCalculator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 
 class UserRepositoryImpl(
     private val userDao: UserDao,
+    private val runRepository: RunRepository, // Добавляем зависимость
     private val context: Context
 ) : UserRepository {
 
@@ -73,5 +76,46 @@ class UserRepositoryImpl(
 
     override suspend fun isLoggedIn(): Boolean {
         return getCurrentUser() != null
+    }
+
+    override suspend fun updateUserStats(userId: String) {
+        val runs = runRepository.getAllRuns(userId).first()
+        val stats = StatisticsCalculator.calculateUserStats(runs)
+
+        val user = userDao.getUser(userId).first()
+        user?.let {
+            val updatedUser = it.copy(
+                totalDistance = stats.totalDistance,
+                totalTime = stats.totalDuration,
+                totalCalories = stats.totalCalories
+            )
+            userDao.updateUser(updatedUser)
+        }
+    }
+
+    override suspend fun getUsersWithStats(): Flow<List<User>> {
+        return userDao.getAllUsers().map { users ->
+            users.map { user ->
+                val runs = runRepository.getAllRuns(user.id).first()
+                val stats = StatisticsCalculator.calculateUserStats(runs)
+                user.copy(
+                    totalDistance = stats.totalDistance,
+                    totalTime = stats.totalDuration,
+                    totalCalories = stats.totalCalories
+                )
+            }
+        }
+    }
+
+    override suspend fun recalculateAllUsersStats() {
+        val users = userDao.getAllUsers().first()
+        users.forEach { user ->
+            updateUserStats(user.id)
+        }
+    }
+
+    // Добавляем метод для получения всех пользователей
+    override suspend fun getAllUsers(): List<User> {
+        return userDao.getAllUsers().first()
     }
 }

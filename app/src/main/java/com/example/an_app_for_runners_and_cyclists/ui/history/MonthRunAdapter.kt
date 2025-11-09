@@ -1,4 +1,3 @@
-// ui/history/adapter/MonthRunAdapter.kt
 package com.example.an_app_for_runners_and_cyclists.ui.history.adapter
 
 import android.view.LayoutInflater
@@ -12,7 +11,8 @@ import com.example.an_app_for_runners_and_cyclists.ui.history.RunHistoryViewMode
 import com.example.an_app_for_runners_and_cyclists.utils.RunCalculator
 
 class MonthRunAdapter(
-    private val onMonthClick: (String) -> Unit
+    private val onMonthClick: (String) -> Unit,
+    private val onRunClick: (String) -> Unit // ДОБАВЛЯЕМ КОЛБЭК ДЛЯ КЛИКА НА ПРОБЕЖКУ
 ) : ListAdapter<RunHistoryViewModel.MonthlyRunGroup, MonthRunAdapter.MonthViewHolder>(DiffCallback) {
 
     private var expandedMonths: Set<String> = emptySet()
@@ -46,7 +46,7 @@ class MonthRunAdapter(
                 onMonthClick(currentMonthGroup.monthKey)
             }
 
-            runAdapter = RunAdapter()
+            runAdapter = RunAdapter(onRunClick) // ПЕРЕДАЕМ КОЛБЭК В RUN ADAPTER
             binding.rvRuns.adapter = runAdapter
         }
 

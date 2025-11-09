@@ -380,9 +380,19 @@ class ProfileFragment : Fragment() {
     }
 
     private fun updateStatsUI(user: com.example.an_app_for_runners_and_cyclists.data.model.User) {
+        // Используем статистику из ViewModel, которая вычисляется из пробежек
         binding.tvDistanceValue.text = String.format("%.1f km", user.totalDistance)
         binding.tvDurationValue.text = RunCalculator.formatDuration(user.totalTime)
         binding.tvCaloriesValue.text = "${user.totalCalories} kCal"
+
+        // Можно также использовать calculatedStats для дополнительной информации
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.calculatedStats.collect { stats ->
+                // Дополнительная статистика, если нужна
+                // Например, средний темп или количество пробежек
+                android.util.Log.d("ProfileFragment", "Total runs: ${stats.totalRuns}, Average pace: ${stats.averagePace}")
+            }
+        }
     }
 
     override fun onDestroyView() {

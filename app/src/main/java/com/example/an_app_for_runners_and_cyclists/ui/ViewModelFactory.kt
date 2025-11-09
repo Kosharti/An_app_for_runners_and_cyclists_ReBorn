@@ -7,6 +7,7 @@ import com.example.an_app_for_runners_and_cyclists.data.repository.RunRepository
 import com.example.an_app_for_runners_and_cyclists.data.repository.RunRepositoryImpl
 import com.example.an_app_for_runners_and_cyclists.data.repository.UserRepository
 import com.example.an_app_for_runners_and_cyclists.data.repository.UserRepositoryImpl
+import com.example.an_app_for_runners_and_cyclists.service.TrackingManager
 import com.example.an_app_for_runners_and_cyclists.ui.community.OtherRunnersViewModel
 import com.example.an_app_for_runners_and_cyclists.ui.details.RunDetailsViewModel
 import com.example.an_app_for_runners_and_cyclists.ui.history.RunHistoryViewModel
@@ -22,7 +23,8 @@ class ViewModelFactory(private val application: RunnersExchangeApplication) : Vi
     private val userRepository: UserRepository by lazy {
         UserRepositoryImpl(
             userDao = application.database.userDao(),
-            context = application.applicationContext // ДОБАВЬТЕ ЭТУ СТРОЧКУ!
+            runRepository = runRepository,
+            context = application.applicationContext
         )
     }
 
@@ -36,16 +38,20 @@ class ViewModelFactory(private val application: RunnersExchangeApplication) : Vi
                 SignUpViewModel(userRepository) as T
             }
             modelClass.isAssignableFrom(RunTrackingViewModel::class.java) -> {
-                RunTrackingViewModel(application, runRepository, userRepository) as T // ДОБАВЬТЕ userRepository
+                RunTrackingViewModel(
+                    application,
+                    runRepository,
+                    userRepository
+                ) as T
             }
             modelClass.isAssignableFrom(RunHistoryViewModel::class.java) -> {
-                RunHistoryViewModel(runRepository, userRepository) as T // ДОБАВЬТЕ userRepository
+                RunHistoryViewModel(runRepository, userRepository) as T
             }
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
-                ProfileViewModel(userRepository) as T
+                ProfileViewModel(userRepository, runRepository) as T
             }
             modelClass.isAssignableFrom(OtherRunnersViewModel::class.java) -> {
-                OtherRunnersViewModel() as T
+                OtherRunnersViewModel(userRepository) as T // ИСПРАВЛЯЕМ: добавляем userRepository
             }
             modelClass.isAssignableFrom(RunDetailsViewModel::class.java) -> {
                 RunDetailsViewModel(runRepository) as T

@@ -167,6 +167,12 @@ class LocationService : Service() {
         fun getService(): LocationService = this@LocationService
     }
 
+    // Добавляем в класс LocationService
+    fun updateTrackingData(elapsedTime: Long, distance: Float, calories: Int) {
+        // Этот метод будет вызываться из TrackingManager для обновления данных
+        // в реальном времени во время трекинга
+    }
+
     data class RunData(
         val startTime: Long,
         val endTime: Long,

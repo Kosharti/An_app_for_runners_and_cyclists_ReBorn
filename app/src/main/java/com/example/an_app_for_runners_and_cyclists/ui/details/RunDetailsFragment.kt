@@ -98,6 +98,22 @@ class RunDetailsFragment : Fragment() {
         binding.tvDuration.text = RunCalculator.formatDuration(run.duration)
         binding.tvCalories.text = "${run.calories} kCal"
         binding.tvPace.text = "${RunCalculator.formatPace(run.pace)} min/km"
+
+        // ДОБАВЛЯЕМ ДОПОЛНИТЕЛЬНУЮ ИНФОРМАЦИЮ, ЕСЛИ ОНА ЕСТЬ
+        run.weatherCondition?.let { weather ->
+            binding.tvWeather.text = "Weather: $weather"
+            binding.tvWeather.visibility = View.VISIBLE
+        } ?: run { binding.tvWeather.visibility = View.GONE }
+
+        run.temperature?.let { temp ->
+            binding.tvTemperature.text = "Temperature: ${temp}°C"
+            binding.tvTemperature.visibility = View.VISIBLE
+        } ?: run { binding.tvTemperature.visibility = View.GONE }
+
+        run.averageHeartRate?.let { heartRate ->
+            binding.tvHeartRate.text = "Avg Heart Rate: ${heartRate} BPM"
+            binding.tvHeartRate.visibility = View.VISIBLE
+        } ?: run { binding.tvHeartRate.visibility = View.GONE }
     }
 
     override fun onDestroyView() {

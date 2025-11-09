@@ -7,7 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.an_app_for_runners_and_cyclists.RunnersExchangeApplication
 import com.example.an_app_for_runners_and_cyclists.data.model.User
+import com.example.an_app_for_runners_and_cyclists.data.repository.RunRepository
 import com.example.an_app_for_runners_and_cyclists.data.repository.UserRepository
+import com.example.an_app_for_runners_and_cyclists.utils.StatisticsCalculator
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +24,8 @@ import java.io.FileOutputStream
 import java.io.InputStream
 
 class ProfileViewModel(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val runRepository: RunRepository
 ) : ViewModel() {
 
     private val _user = MutableStateFlow<User?>(null)
@@ -32,18 +37,58 @@ class ProfileViewModel(
     private val _saveState = MutableStateFlow<SaveState>(SaveState.Idle)
     val saveState: StateFlow<SaveState> = _saveState.asStateFlow()
 
+    private val _calculatedStats = MutableStateFlow(StatisticsCalculator.UserStats(0f, 0L, 0, 0, 0f))
+    val calculatedStats: StateFlow<StatisticsCalculator.UserStats> = _calculatedStats.asStateFlow()
+
     init {
-        loadCurrentUser()
+        loadCurrentUserWithLiveStats()
     }
 
-    private fun loadCurrentUser() {
+    private fun loadCurrentUserWithLiveStats() {
         viewModelScope.launch {
-            userRepository.getCurrentUser()?.let { currentUser ->
-                _user.value = currentUser
+            // Комбинируем поток пользователя и поток его пробежек
+            val currentUserFlow = userRepository.getCurrentUser()
+            currentUserFlow?.let { user ->
+                // Создаем комбинированный поток пользователя и его пробежек
+                combine(
+                    userRepository.getUser(user.id).distinctUntilChanged(),
+                    runRepository.getAllRuns(user.id).distinctUntilChanged()
+                ) { user, runs ->
+                    user to runs
+                }.collect { (user, runs) ->
+                    user?.let {
+                        // Пересчитываем статистику из пробежек
+                        val stats = StatisticsCalculator.calculateUserStats(runs)
+                        _calculatedStats.value = stats
+
+                        // Обновляем пользователя с актуальной статистикой
+                        val updatedUser = it.copy(
+                            totalDistance = stats.totalDistance,
+                            totalTime = stats.totalDuration,
+                            totalCalories = stats.totalCalories
+                        )
+                        _user.value = updatedUser
+
+                        // Автоматически обновляем в базе (опционально)
+                        autoUpdateUserStats(updatedUser)
+                    }
+                }
             }
         }
     }
 
+    private fun autoUpdateUserStats(user: User) {
+        viewModelScope.launch {
+            try {
+                userRepository.updateUser(user)
+            } catch (e: Exception) {
+                // Логируем ошибку, но не прерываем работу
+                android.util.Log.e("ProfileViewModel", "Failed to auto-update user stats: ${e.message}")
+            }
+        }
+    }
+
+    // Остальные методы остаются без изменений
     fun startEditing() {
         _isEditing.value = true
     }

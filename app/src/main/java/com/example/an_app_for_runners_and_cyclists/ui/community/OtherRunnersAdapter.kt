@@ -29,10 +29,10 @@ class OtherRunnersAdapter : ListAdapter<User, OtherRunnersAdapter.RunnerViewHold
 
         fun bind(runner: User) {
             binding.tvRunnerName.text = runner.name
-            binding.tvRunnerAddress.text = runner.address
+            binding.tvRunnerAddress.text = runner.address ?: "No address provided"
             binding.tvRunnerStats.text = "Total: ${String.format("%.1f", runner.totalDistance)} km, ${RunCalculator.formatDuration(runner.totalTime)}"
 
-            // TODO: Установить аватар когда будет функционал
+            // TODO: Установить аватар, когда будет функционал
             // binding.ivRunnerAvatar.setImageResource(...)
         }
     }

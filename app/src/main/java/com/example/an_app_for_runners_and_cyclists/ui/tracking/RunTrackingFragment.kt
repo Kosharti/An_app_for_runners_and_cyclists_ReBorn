@@ -16,6 +16,7 @@ import com.example.an_app_for_runners_and_cyclists.ui.ViewModelFactory
 import com.example.an_app_for_runners_and_cyclists.utils.RunCalculator
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class RunTrackingFragment : Fragment() {
 
@@ -84,10 +85,12 @@ class RunTrackingFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.startButton.setOnClickListener {
+            Timber.d("👉 START button clicked")
             viewModel.startTracking()
         }
 
         binding.stopButton.setOnClickListener {
+            Timber.d("🛑 STOP button clicked")
             viewModel.stopTracking()
         }
     }
@@ -118,15 +121,10 @@ class RunTrackingFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.heartRate.collectLatest { heartRate ->
-                binding.tvHeartRate.text = heartRate.toString()
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.weatherInfo.collectLatest { weather ->
-                binding.tvTemperature.text = "${weather.temperature}°C"
-                binding.tvWeatherCondition.text = weather.condition
+            viewModel.showSaveConfirmation.collectLatest { show ->
+                if (show) {
+                    showSaveConfirmation()
+                }
             }
         }
     }
@@ -136,16 +134,28 @@ class RunTrackingFragment : Fragment() {
             RunTrackingViewModel.TrackingState.IDLE -> {
                 binding.startButton.visibility = View.VISIBLE
                 binding.stopButton.visibility = View.GONE
-                resetStats()
+                Timber.d("🔄 UI: IDLE state - showing START button")
             }
             RunTrackingViewModel.TrackingState.TRACKING -> {
                 binding.startButton.visibility = View.GONE
                 binding.stopButton.visibility = View.VISIBLE
-            }
-            RunTrackingViewModel.TrackingState.PAUSED -> {
-                // Можно добавить кнопку возобновления
+                Timber.d("🔄 UI: TRACKING state - showing STOP button")
             }
         }
+    }
+
+    private fun showSaveConfirmation() {
+        // Показываем Snackbar или Toast о сохранении пробежки
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle("Run Saved!")
+            .setMessage("Your run has been saved to history.")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+                viewModel.resetTrackingData()
+            }
+            .show()
+
+        Timber.d("📋 Showed save confirmation dialog")
     }
 
     private fun resetStats() {

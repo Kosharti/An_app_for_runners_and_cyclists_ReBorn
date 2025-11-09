@@ -9,6 +9,7 @@ import com.example.an_app_for_runners_and_cyclists.utils.RunCalculator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -16,7 +17,7 @@ import java.util.Locale
 
 class RunHistoryViewModel(
     private val runRepository: RunRepository,
-    private val userRepository: UserRepository // ДОБАВЬТЕ ЭТОТ ПАРАМЕТР
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _runs = MutableStateFlow<List<Run>>(emptyList())
@@ -40,11 +41,14 @@ class RunHistoryViewModel(
             // Получаем текущего пользователя
             val currentUser = userRepository.getCurrentUser()
             if (currentUser != null) {
-                runRepository.getAllRuns(currentUser.id).collect { runsList ->
-                    _runs.value = runsList
-                    groupRunsByMonth(runsList)
-                    calculateTotalStats(runsList)
-                }
+                // ИСПОЛЬЗУЕМ distinctUntilChanged ДЛЯ ОПТИМИЗАЦИИ
+                runRepository.getAllRuns(currentUser.id)
+                    .distinctUntilChanged()
+                    .collect { runsList ->
+                        _runs.value = runsList
+                        groupRunsByMonth(runsList)
+                        calculateTotalStats(runsList)
+                    }
             }
         }
     }

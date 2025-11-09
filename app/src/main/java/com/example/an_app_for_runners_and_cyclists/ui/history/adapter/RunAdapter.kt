@@ -11,7 +11,9 @@ import com.example.an_app_for_runners_and_cyclists.utils.RunCalculator
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class RunAdapter : ListAdapter<Run, RunAdapter.RunViewHolder>(DiffCallback) {
+class RunAdapter(
+    private val onRunClick: (String) -> Unit // ДОБАВЛЯЕМ КОЛБЭК ДЛЯ КЛИКА
+) : ListAdapter<Run, RunAdapter.RunViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RunViewHolder {
         val binding = ItemRunBinding.inflate(
@@ -25,7 +27,7 @@ class RunAdapter : ListAdapter<Run, RunAdapter.RunViewHolder>(DiffCallback) {
         holder.bind(run)
     }
 
-    class RunViewHolder(
+    inner class RunViewHolder( // ДЕЛАЕМ INNER CLASS ДЛЯ ДОСТУПА К КОЛБЭКУ
         private val binding: ItemRunBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -35,6 +37,11 @@ class RunAdapter : ListAdapter<Run, RunAdapter.RunViewHolder>(DiffCallback) {
 
             binding.tvDate.text = dateString
             binding.tvStats.text = "${String.format("%.2f", run.distance)} km in ${RunCalculator.formatDuration(run.duration)}"
+
+            // ОБРАБОТКА КЛИКА НА ПРОБЕЖКУ
+            binding.root.setOnClickListener {
+                onRunClick(run.id)
+            }
         }
     }
 
