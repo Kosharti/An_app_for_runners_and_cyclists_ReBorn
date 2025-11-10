@@ -17,6 +17,7 @@ import com.example.an_app_for_runners_and_cyclists.ui.ViewModelFactory
 import com.example.an_app_for_runners_and_cyclists.ui.history.adapter.MonthRunAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class RunHistoryFragment : Fragment() {
 
@@ -59,6 +60,8 @@ class RunHistoryFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = monthRunAdapter
         }
+
+        Timber.d("✅ RunHistory RecyclerView setup complete")
     }
 
     private fun setupHeader() {

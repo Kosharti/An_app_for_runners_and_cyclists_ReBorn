@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.an_app_for_runners_and_cyclists.databinding.ItemRunMonthBinding
 import com.example.an_app_for_runners_and_cyclists.ui.history.RunHistoryViewModel
 import com.example.an_app_for_runners_and_cyclists.utils.RunCalculator
+import timber.log.Timber
 
 class MonthRunAdapter(
     private val onMonthClick: (String) -> Unit,
@@ -46,8 +47,15 @@ class MonthRunAdapter(
                 onMonthClick(currentMonthGroup.monthKey)
             }
 
-            runAdapter = RunAdapter(onRunClick) // ПЕРЕДАЕМ КОЛБЭК В RUN ADAPTER
-            binding.rvRuns.adapter = runAdapter
+            runAdapter = RunAdapter(onRunClick)
+
+            // ВАЖНОЕ ИСПРАВЛЕНИЕ: Добавляем LayoutManager для вложенного RecyclerView
+            binding.rvRuns.apply {
+                layoutManager = androidx.recyclerview.widget.LinearLayoutManager(binding.root.context)
+                adapter = runAdapter
+            }
+
+            Timber.d("✅ MonthViewHolder initialized with LayoutManager")
         }
 
         fun bind(monthGroup: RunHistoryViewModel.MonthlyRunGroup) {
@@ -68,6 +76,7 @@ class MonthRunAdapter(
 
             if (isExpanded) {
                 runAdapter.submitList(monthGroup.runs)
+                Timber.d("📊 Expanded month: ${monthGroup.displayName}, ${monthGroup.runs.size} runs")
             }
         }
     }

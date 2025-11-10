@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -99,7 +100,10 @@ class RunDetailsFragment : Fragment() {
         binding.tvCalories.text = "${run.calories} kCal"
         binding.tvPace.text = "${RunCalculator.formatPace(run.pace)} min/km"
 
-        // ДОБАВЛЯЕМ ДОПОЛНИТЕЛЬНУЮ ИНФОРМАЦИЮ, ЕСЛИ ОНА ЕСТЬ
+        // Показываем дополнительную информацию, если она есть
+        // ИСПРАВЛЯЕМ: используем binding вместо findViewById
+        val additionalInfoLayout = binding.root.findViewById<LinearLayout>(R.id.additional_info_layout)
+
         run.weatherCondition?.let { weather ->
             binding.tvWeather.text = "Weather: $weather"
             binding.tvWeather.visibility = View.VISIBLE
@@ -114,6 +118,10 @@ class RunDetailsFragment : Fragment() {
             binding.tvHeartRate.text = "Avg Heart Rate: ${heartRate} BPM"
             binding.tvHeartRate.visibility = View.VISIBLE
         } ?: run { binding.tvHeartRate.visibility = View.GONE }
+
+        // Показываем блок дополнительной информации, если есть хотя бы одна дополнительная метрика
+        val hasAdditionalInfo = run.weatherCondition != null || run.temperature != null || run.averageHeartRate != null
+        additionalInfoLayout?.visibility = if (hasAdditionalInfo) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {

@@ -187,44 +187,6 @@
 
                 </LinearLayout>
 
-                <!-- Дополнительная информация -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="16dp">
-
-                    <TextView
-                        android:id="@+id/tvWeather"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Weather: Sunny"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/tvTemperature"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Temperature: 25°C"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:layout_marginTop="4dp"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/tvHeartRate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Avg Heart Rate: 87 BPM"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:layout_marginTop="4dp"
-                        android:visibility="gone" />
-
-                </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -248,6 +210,46 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Дополнительная информация -->
+            <LinearLayout
+                android:id="@+id/additional_info_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="24dp"
+                android:padding="16dp"
+                android:background="#1A1A1A"
+                android:alpha="0.8"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tvWeather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weather: Sunny"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvTemperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Temperature: 25°C"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:id="@+id/tvHeartRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Avg Heart Rate: 87 BPM"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp" />
 
             </LinearLayout>
 

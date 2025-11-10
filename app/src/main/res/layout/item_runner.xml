@@ -11,14 +11,21 @@
     android:gravity="center_vertical">
 
     <!-- Avatar Placeholder -->
-    <ImageView
-        android:id="@+id/ivRunnerAvatar"
+    <androidx.cardview.widget.CardView
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/profile_gradient"
-        android:scaleType="centerCrop"
-        android:src="@drawable/base_profile_img"
-        android:layout_marginEnd="16dp" />
+        app:cardCornerRadius="25dp"
+        android:layout_marginEnd="16dp"
+        app:cardElevation="2dp">
+
+        <ImageView
+            android:id="@+id/ivRunnerAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/base_profile_img" />
+
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="0dp"

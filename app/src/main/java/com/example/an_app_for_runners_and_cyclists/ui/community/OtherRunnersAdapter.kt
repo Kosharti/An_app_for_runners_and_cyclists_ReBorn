@@ -1,13 +1,18 @@
 package com.example.an_app_for_runners_and_cyclists.ui.community
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.an_app_for_runners_and_cyclists.R
 import com.example.an_app_for_runners_and_cyclists.data.model.User
 import com.example.an_app_for_runners_and_cyclists.databinding.ItemRunnerBinding
 import com.example.an_app_for_runners_and_cyclists.utils.RunCalculator
+import timber.log.Timber
+import java.io.File
 
 class OtherRunnersAdapter : ListAdapter<User, OtherRunnersAdapter.RunnerViewHolder>(DiffCallback) {
 
@@ -32,8 +37,38 @@ class OtherRunnersAdapter : ListAdapter<User, OtherRunnersAdapter.RunnerViewHold
             binding.tvRunnerAddress.text = runner.address ?: "No address provided"
             binding.tvRunnerStats.text = "Total: ${String.format("%.1f", runner.totalDistance)} km, ${RunCalculator.formatDuration(runner.totalTime)}"
 
-            // TODO: Установить аватар, когда будет функционал
-            // binding.ivRunnerAvatar.setImageResource(...)
+            // Загружаем фото пользователя с помощью Glide
+            loadProfileImage(runner.profileImage)
+
+            Timber.d("Loading user: ${runner.name}, photo: ${runner.profileImage}")
+        }
+
+        private fun loadProfileImage(imageUri: String?) {
+            if (!imageUri.isNullOrEmpty()) {
+                try {
+                    Timber.d("Attempting to load image: $imageUri")
+
+                    // Используем Glide для загрузки изображений
+                    Glide.with(binding.root.context)
+                        .load(imageUri)
+                        .error(R.drawable.base_profile_img) // Заглушка при ошибке
+                        .placeholder(R.drawable.base_profile_img) // Заглушка во время загрузки
+                        .into(binding.ivRunnerAvatar)
+
+                    Timber.d("✅ Image loaded successfully: $imageUri")
+
+                } catch (e: Exception) {
+                    Timber.e(e, "❌ Failed to load profile image: $imageUri")
+                    setDefaultAvatar()
+                }
+            } else {
+                Timber.d("🔄 No profile image, using default")
+                setDefaultAvatar()
+            }
+        }
+
+        private fun setDefaultAvatar() {
+            binding.ivRunnerAvatar.setImageResource(R.drawable.base_profile_img)
         }
     }
 

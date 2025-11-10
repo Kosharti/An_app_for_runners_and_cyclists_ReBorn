@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class OtherRunnersViewModel(
     private val userRepository: UserRepository
@@ -23,16 +24,33 @@ class OtherRunnersViewModel(
     private fun loadRunners() {
         viewModelScope.launch {
             try {
+                Timber.d("🔄 Loading runners from database...")
                 val currentUser = userRepository.getCurrentUser()
+                Timber.d("👤 Current user: ${currentUser?.name} (ID: ${currentUser?.id})")
+
                 if (currentUser != null) {
-                    // Получаем всех пользователей, кроме текущего
                     val allUsers = userRepository.getAllUsers()
-                    _runners.value = allUsers.filter { it.id != currentUser.id }
+                    Timber.d("📊 Found ${allUsers.size} total users in database")
+
+                    // Логируем всех пользователей
+                    allUsers.forEach { user ->
+                        Timber.d("👤 User: ${user.name}, Photo: ${user.profileImage}, Distance: ${user.totalDistance}km")
+                    }
+
+                    val filteredUsers = allUsers.filter { it.id != currentUser.id }
+                    Timber.d("👥 Showing ${filteredUsers.size} other users (excluding current)")
+
+                    _runners.value = filteredUsers
+
+                    if (filteredUsers.isEmpty()) {
+                        Timber.d("ℹ️ No other users found in database")
+                    }
                 } else {
+                    Timber.e("❌ No current user - cannot load community")
                     _runners.value = emptyList()
                 }
             } catch (e: Exception) {
-                // В случае ошибки показываем пустой список
+                Timber.e(e, "💥 Error loading runners")
                 _runners.value = emptyList()
             }
         }

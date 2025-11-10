@@ -1,10 +1,12 @@
 package com.example.an_app_for_runners_and_cyclists.ui.tracking
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -121,6 +123,19 @@ class RunTrackingFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.heartRate.collectLatest { heartRate ->
+                binding.tvHeartRate.text = "$heartRate"
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.weatherInfo.collectLatest { weather ->
+                binding.tvTemperature.text = "${weather.temperature}°C"
+                binding.tvWeatherCondition.text = "${weather.emoji} ${weather.condition}"
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.showSaveConfirmation.collectLatest { show ->
                 if (show) {
                     showSaveConfirmation()
@@ -145,17 +160,30 @@ class RunTrackingFragment : Fragment() {
     }
 
     private fun showSaveConfirmation() {
-        // Показываем Snackbar или Toast о сохранении пробежки
-        androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle("Run Saved!")
-            .setMessage("Your run has been saved to history.")
-            .setPositiveButton("OK") { dialog, _ ->
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext(), R.style.CustomAlertDialog).apply {
+            setTitle("Run Saved! 🎉")
+            setMessage("Your run has been successfully saved to history.\n\n" +
+                    "Distance: ${String.format("%.2f", viewModel.distance.value)} km\n" +
+                    "Duration: ${RunCalculator.formatDuration(viewModel.elapsedTime.value)}\n" +
+                    "Calories: ${viewModel.calories.value} kCal")
+            setPositiveButton("Great!") { dialog, _ ->
                 dialog.dismiss()
                 viewModel.resetTrackingData()
             }
-            .show()
+            setCancelable(false)
+        }.create()
 
-        Timber.d("📋 Showed save confirmation dialog")
+        dialog.setOnShowListener {
+            // Устанавливаем темные цвета для текста
+            dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)?.setTextColor(Color.WHITE)
+            dialog.findViewById<TextView>(android.R.id.message)?.setTextColor(Color.WHITE)
+            dialog.findViewById<TextView>(android.R.id.title)?.setTextColor(Color.WHITE)
+        }
+
+        dialog.show()
+
+        // Устанавливаем темный фон для диалога
+        dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_background)
     }
 
     private fun resetStats() {
