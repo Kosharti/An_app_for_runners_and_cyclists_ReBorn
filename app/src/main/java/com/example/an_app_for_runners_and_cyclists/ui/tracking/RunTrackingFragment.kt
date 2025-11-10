@@ -46,12 +46,10 @@ class RunTrackingFragment : Fragment() {
     }
 
     private fun setupHeader() {
-        // Обработчик меню (три полоски)
         binding.menuIcon.setOnClickListener {
             showDropdownMenu()
         }
 
-        // Обработчик иконки истории (справа)
         binding.historyIcon.setOnClickListener {
             findNavController().navigate(R.id.runHistoryFragment)
         }
@@ -64,7 +62,6 @@ class RunTrackingFragment : Fragment() {
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_tracking -> {
-                    // Уже в трекинге
                     true
                 }
                 R.id.action_history -> {
@@ -174,7 +171,6 @@ class RunTrackingFragment : Fragment() {
         }.create()
 
         dialog.setOnShowListener {
-            // Устанавливаем темные цвета для текста
             dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)?.setTextColor(Color.WHITE)
             dialog.findViewById<TextView>(android.R.id.message)?.setTextColor(Color.WHITE)
             dialog.findViewById<TextView>(android.R.id.title)?.setTextColor(Color.WHITE)
@@ -182,7 +178,6 @@ class RunTrackingFragment : Fragment() {
 
         dialog.show()
 
-        // Устанавливаем темный фон для диалога
         dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_background)
     }
 

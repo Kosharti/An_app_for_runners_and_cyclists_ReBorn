@@ -38,10 +38,8 @@ class RunHistoryViewModel(
 
     private fun loadRuns() {
         viewModelScope.launch {
-            // Получаем текущего пользователя
             val currentUser = userRepository.getCurrentUser()
             if (currentUser != null) {
-                // ИСПОЛЬЗУЕМ distinctUntilChanged ДЛЯ ОПТИМИЗАЦИИ
                 runRepository.getAllRuns(currentUser.id)
                     .distinctUntilChanged()
                     .collect { runsList ->

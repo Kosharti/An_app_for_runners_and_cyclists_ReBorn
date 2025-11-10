@@ -14,7 +14,7 @@ import timber.log.Timber
 
 class UserRepositoryImpl(
     private val userDao: UserDao,
-    private val runRepository: RunRepository, // Добавляем зависимость
+    private val runRepository: RunRepository,
     private val context: Context
 ) : UserRepository {
 
@@ -41,13 +41,10 @@ class UserRepositoryImpl(
         return userDao.getUserByEmail(email)
     }
 
-    // Новые методы для управления сессией
-
     override suspend fun login(email: String, password: String): User? {
         val user = getUserByEmail(email)
 
         if (user != null && user.password == password) {
-            // Сохраняем ID текущего пользователя
             prefs.edit().putString("current_user_id", user.id).apply()
             currentUser = user
             return user
@@ -57,13 +54,10 @@ class UserRepositoryImpl(
     }
 
     override suspend fun getCurrentUser(): User? {
-        // Если уже есть в памяти, возвращаем
         if (currentUser != null) return currentUser
 
-        // Иначе пытаемся восстановить из SharedPreferences
         val userId = prefs.getString("current_user_id", null)
         return if (userId != null) {
-            // Загружаем пользователя из базы
             userDao.getUser(userId).first().also {
                 currentUser = it
             }
@@ -117,16 +111,13 @@ class UserRepositoryImpl(
         }
     }
 
-    // Добавляем метод для получения всех пользователей
     override suspend fun getAllUsers(): List<User> {
         return userDao.getAllUsers().first()
     }
 
-    // UserRepositoryImpl.kt - реализация
     override suspend fun findUserByProvider(provider: String, providerId: String): User? {
         return withContext(Dispatchers.IO) {
             try {
-                // Ищем пользователя по провайдеру и ID провайдера
                 userDao.getAllUsers().first().find {
                     it.authProvider == provider && it.providerId == providerId
                 }
@@ -165,7 +156,6 @@ class UserRepositoryImpl(
         }
     }
 
-    // UserRepositoryImpl.kt - реализация
     override suspend fun setCurrentUser(user: User) {
         currentUser = user
         prefs.edit().putString("current_user_id", user.id).apply()

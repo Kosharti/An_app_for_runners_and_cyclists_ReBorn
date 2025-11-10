@@ -1,4 +1,3 @@
-// GoogleAuthManager.kt
 package com.example.an_app_for_runners_and_cyclists.auth
 
 import android.app.Activity
@@ -37,18 +36,12 @@ class GoogleAuthManager(
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(Config.GOOGLE_WEB_CLIENT_ID)
             .requestEmail()
-            .requestProfile() // Добавляем запрос профиля
+            .requestProfile()
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(activity, gso)
     }
 
-    // И удаляем старый метод signIn(), так как теперь мы запускаем intent из Fragment
-// fun signIn() {
-//     Timber.d("🔄 Starting Google Sign-In flow")
-//     val signInIntent = googleSignInClient.signInIntent
-//     activity.startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN)
-// }
 
     suspend fun handleSignInResult(data: Intent?): AuthResult {
         return try {
@@ -102,11 +95,11 @@ class GoogleAuthManager(
             id = "google_${account.id ?: System.currentTimeMillis()}",
             name = account.displayName ?: "Google User",
             email = account.email ?: "",
-            password = "", // Не используется для OAuth
+            password = "",
             profileImage = account.photoUrl?.toString(),
             authProvider = "google",
             providerId = account.id,
-            accessToken = account.idToken // Сохраняем ID токен
+            accessToken = account.idToken
         )
     }
 
@@ -128,7 +121,6 @@ class GoogleAuthManager(
         }
     }
 
-    // GoogleAuthManager.kt - добавьте этот метод
     fun checkGoogleSignInAvailability(): Boolean {
         return try {
             val account = GoogleSignIn.getLastSignedInAccount(activity)
@@ -142,7 +134,6 @@ class GoogleAuthManager(
         }
     }
 
-    // GoogleAuthManager.kt
     suspend fun silentSignIn(): AuthResult? {
         return try {
             val account = GoogleSignIn.getLastSignedInAccount(activity)
@@ -167,7 +158,6 @@ class GoogleAuthManager(
             }
     }
 
-    // GoogleAuthManager.kt - добавляем новый метод
     fun getSignInIntent(): Intent {
         Timber.d("🔄 Creating Google Sign-In intent")
         return googleSignInClient.signInIntent

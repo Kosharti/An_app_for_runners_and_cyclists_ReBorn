@@ -9,7 +9,6 @@
     android:padding="16dp"
     android:gravity="center_vertical">
 
-    <!-- Run Icon -->
     <View
         android:layout_width="31dp"
         android:layout_height="31dp"

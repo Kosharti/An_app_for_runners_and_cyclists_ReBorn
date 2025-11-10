@@ -22,7 +22,6 @@ object StatisticsCalculator {
         val totalCalories = runs.sumOf { it.calories }
         val totalRuns = runs.size
 
-        // Рассчитываем средний темп
         val averagePace = if (totalDistance > 0 && totalDuration > 0) {
             RunCalculator.calculatePace(totalDistance, totalDuration)
         } else {

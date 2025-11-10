@@ -45,12 +45,10 @@ class OtherRunnersFragment : Fragment() {
     }
 
     private fun setupHeader() {
-        // Обработчик меню (три полоски)
         binding.menuIcon.setOnClickListener {
             showDropdownMenu()
         }
 
-        // Заголовок
         binding.toolbarTitle.text = "Community"
     }
 
@@ -73,7 +71,6 @@ class OtherRunnersFragment : Fragment() {
                     true
                 }
                 R.id.action_community -> {
-                    // Уже в сообществе
                     true
                 }
                 else -> false

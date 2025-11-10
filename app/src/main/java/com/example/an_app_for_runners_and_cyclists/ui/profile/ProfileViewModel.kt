@@ -46,10 +46,8 @@ class ProfileViewModel(
 
     private fun loadCurrentUserWithLiveStats() {
         viewModelScope.launch {
-            // Комбинируем поток пользователя и поток его пробежек
             val currentUserFlow = userRepository.getCurrentUser()
             currentUserFlow?.let { user ->
-                // Создаем комбинированный поток пользователя и его пробежек
                 combine(
                     userRepository.getUser(user.id).distinctUntilChanged(),
                     runRepository.getAllRuns(user.id).distinctUntilChanged()
@@ -57,11 +55,9 @@ class ProfileViewModel(
                     user to runs
                 }.collect { (user, runs) ->
                     user?.let {
-                        // Пересчитываем статистику из пробежек
                         val stats = StatisticsCalculator.calculateUserStats(runs)
                         _calculatedStats.value = stats
 
-                        // Обновляем пользователя с актуальной статистикой
                         val updatedUser = it.copy(
                             totalDistance = stats.totalDistance,
                             totalTime = stats.totalDuration,
@@ -69,7 +65,6 @@ class ProfileViewModel(
                         )
                         _user.value = updatedUser
 
-                        // Автоматически обновляем в базе (опционально)
                         autoUpdateUserStats(updatedUser)
                     }
                 }
@@ -82,13 +77,11 @@ class ProfileViewModel(
             try {
                 userRepository.updateUser(user)
             } catch (e: Exception) {
-                // Логируем ошибку, но не прерываем работу
                 android.util.Log.e("ProfileViewModel", "Failed to auto-update user stats: ${e.message}")
             }
         }
     }
 
-    // Остальные методы остаются без изменений
     fun startEditing() {
         _isEditing.value = true
     }
@@ -149,7 +142,6 @@ class ProfileViewModel(
         viewModelScope.launch {
             val currentUser = _user.value ?: return@launch
 
-            // Всегда копируем изображение в постоянное хранилище
             val permanentUri = copyImageToInternalStorage(imageUri)
 
             val updatedUser = currentUser.copy(profileImage = permanentUri)
@@ -166,23 +158,19 @@ class ProfileViewModel(
                 val context = RunnersExchangeApplication.getAppContext()
                     ?: return@withContext imageUri
 
-                // Создаем директорию для профильных фото
                 val internalDir = File(context.filesDir, "profile_images")
                 if (!internalDir.exists()) {
                     internalDir.mkdirs()
                 }
 
-                // Создаем постоянный файл
                 val permanentFile = File(internalDir, "profile_${System.currentTimeMillis()}.jpg")
 
                 val uri = Uri.parse(imageUri)
 
                 when {
-                    // Если это content URI (из галереи)
                     uri.scheme == "content" -> {
                         copyContentUriToFile(context, uri, permanentFile)
                     }
-                    // Если это file URI (из камеры)
                     uri.scheme == "file" || imageUri.startsWith("/") -> {
                         val sourceFile = if (imageUri.startsWith("/")) {
                             File(imageUri)
@@ -204,7 +192,7 @@ class ProfileViewModel(
                 permanentFile.absolutePath
             } catch (e: Exception) {
                 Timber.e(e, "Failed to copy image to internal storage")
-                imageUri // В случае ошибки возвращаем оригинальный URI
+                imageUri
             }
         }
     }

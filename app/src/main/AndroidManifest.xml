@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
 
-    <!-- Добавьте эти разрешения для работы с фото -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -24,7 +23,6 @@
         android:theme="@style/Theme.RunnersExchange"
         tools:targetApi="31">
 
-        <!-- SignInActivity как ГЛАВНЫЙ экран запуска -->
         <activity
             android:name=".SignInActivity"
             android:exported="true">
@@ -34,18 +32,15 @@
             </intent-filter>
         </activity>
 
-        <!-- MainActivity БЕЗ intent-filter - запускается только из кода -->
         <activity
             android:name=".MainActivity"
             android:exported="false" />
 
-        <!-- Сервис локации -->
         <service
             android:name=".service.LocationService"
             android:enabled="true"
             android:exported="false" />
 
-        <!-- Provider для работы с файлами -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -56,7 +51,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <!-- Упрощенная конфигурация для Google Sign-In -->
         <activity
             android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
             android:exported="false"

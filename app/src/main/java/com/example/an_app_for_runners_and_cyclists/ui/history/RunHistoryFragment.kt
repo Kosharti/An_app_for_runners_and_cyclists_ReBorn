@@ -65,17 +65,13 @@ class RunHistoryFragment : Fragment() {
     }
 
     private fun setupHeader() {
-        // Обработчик меню (три полоски)
         binding.menuIcon.setOnClickListener {
             showDropdownMenu()
         }
 
-        // Обработчик иконки истории
         binding.historyIcon.setOnClickListener {
-            // Уже в истории, ничего не делаем
         }
 
-        // Заголовок
         binding.toolbarTitle.text = "Run History"
     }
 
@@ -90,7 +86,6 @@ class RunHistoryFragment : Fragment() {
                     true
                 }
                 R.id.action_history -> {
-                    // Уже в истории
                     true
                 }
                 R.id.action_profile -> {

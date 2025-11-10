@@ -20,11 +20,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        // Просто инициализируем навигацию, всё остальное во фрагментах
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         val navController = navHostFragment.navController
 
-        // УДАЛИТЕ ВЕСЬ ОСТАЛЬНЫЙ КОД ОТСЮДА
     }
 }

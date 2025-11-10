@@ -12,5 +12,5 @@ interface RunRepository {
     fun getTotalDistance(userId: String): Flow<Float>
     fun getTotalDuration(userId: String): Flow<Long>
     fun getTotalCalories(userId: String): Flow<Int>
-    fun getAllRuns(userId: String): Flow<List<Run>> // Добавляем новый метод
+    fun getAllRuns(userId: String): Flow<List<Run>>
 }

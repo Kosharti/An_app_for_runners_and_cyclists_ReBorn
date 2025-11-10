@@ -15,27 +15,25 @@ class DataInitializer(
 
     fun initializeData(scope: CoroutineScope) {
         scope.launch {
-            // Create default user if doesn't exist
             val userId = "user1"
 
             val user = User(
                 id = userId,
                 name = "Emily Stone",
                 email = "emily1276@gmail.com",
-                password = "qwerty123", // ДОБАВЬТЕ ПАРОЛЬ
+                password = "qwerty123",
                 address = "4865 Plainfield Avenue\nSyracuse, NY 13202",
                 profileImage = null,
                 height = 168,
                 weight = 68,
                 runningReason = "Fitness and health",
                 totalDistance = 15f,
-                totalTime = 10251000L, // 2:50:51 in milliseconds
+                totalTime = 10251000L,
                 totalCalories = 1540
             )
 
             userRepository.createUser(user)
 
-            // Create some sample runs
             val sampleRuns = listOf(
                 Run(
                     id = UUID.randomUUID().toString(),

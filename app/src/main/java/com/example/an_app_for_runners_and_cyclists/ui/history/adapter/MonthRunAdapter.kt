@@ -13,7 +13,7 @@ import timber.log.Timber
 
 class MonthRunAdapter(
     private val onMonthClick: (String) -> Unit,
-    private val onRunClick: (String) -> Unit // ДОБАВЛЯЕМ КОЛБЭК ДЛЯ КЛИКА НА ПРОБЕЖКУ
+    private val onRunClick: (String) -> Unit
 ) : ListAdapter<RunHistoryViewModel.MonthlyRunGroup, MonthRunAdapter.MonthViewHolder>(DiffCallback) {
 
     private var expandedMonths: Set<String> = emptySet()
@@ -49,7 +49,6 @@ class MonthRunAdapter(
 
             runAdapter = RunAdapter(onRunClick)
 
-            // ВАЖНОЕ ИСПРАВЛЕНИЕ: Добавляем LayoutManager для вложенного RecyclerView
             binding.rvRuns.apply {
                 layoutManager = androidx.recyclerview.widget.LinearLayoutManager(binding.root.context)
                 adapter = runAdapter
@@ -67,11 +66,9 @@ class MonthRunAdapter(
             binding.tvTime.text = RunCalculator.formatDuration(monthGroup.totalDuration)
             binding.tvCalories.text = "${monthGroup.totalCalories} kCal"
 
-            // Set expand/collapse icon rotation
             val isExpanded = expandedMonths.contains(monthGroup.monthKey)
             binding.iconArrowDown.rotation = if (isExpanded) 180f else 0f
 
-            // Show/hide runs list
             binding.rvRuns.visibility = if (isExpanded) View.VISIBLE else View.GONE
 
             if (isExpanded) {

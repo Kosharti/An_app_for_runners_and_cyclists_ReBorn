@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">An_app_for_runners_and_cyclists</string>
+    <string name="app_name">Runners Exchange</string>
     <string name="icon_history">history</string>
     <string name="icon_location">location_on</string>
     <string name="icon_alarm">alarm</string>

@@ -8,12 +8,10 @@
         <item name="fontFamily">@font/montserrat</item>
         <item name="android:windowFullscreen">true</item>
 
-        <!-- ДОБАВЛЯЕМ ЦВЕТА ДЛЯ ТЕКСТА -->
         <item name="android:textColorPrimary">#FFFFFF</item>
         <item name="android:textColorSecondary">#CCFFFFFF</item>
         <item name="colorOnSurface">#FFFFFF</item>
 
-        <!-- ДОБАВЬТЕ ЭТИ СТРОЧКИ ДЛЯ POPUP MENU -->
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
         <item name="android:popupMenuStyle">@style/PopupMenuStyle</item>
     </style>
@@ -26,7 +24,6 @@
         <item name="boxCornerRadiusTopEnd">25dp</item>
         <item name="boxCornerRadiusTopStart">25dp</item>
 
-        <!-- ЯВНО УКАЗЫВАЕМ ЦВЕТА -->
         <item name="hintTextColor">#99FFFFFF</item>
         <item name="android:textColorHint">#99FFFFFF</item>
         <item name="boxBackgroundColor">@android:color/transparent</item>
@@ -34,18 +31,15 @@
         <item name="android:background">@drawable/bg_text_field_with_shadow</item>
         <item name="android:elevation">2dp</item>
 
-        <!-- ЦВЕТ ТЕКСТА ДЛЯ ВВОДА -->
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
-    <!-- ОБНОВЛЁННЫЙ СТИЛЬ ДЛЯ POPUP MENU -->
     <style name="PopupMenuStyle" parent="Widget.AppCompat.PopupMenu">
         <item name="android:popupBackground">@drawable/menu_background</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textColorSecondary">@color/white</item>
     </style>
 
-    <!-- Добавляем в themes.xml -->
     <style name="CustomAlertDialog" parent="ThemeOverlay.Material3.Dialog.Alert">
         <item name="android:background">@drawable/dialog_background</item>
         <item name="android:textColor">@color/white</item>

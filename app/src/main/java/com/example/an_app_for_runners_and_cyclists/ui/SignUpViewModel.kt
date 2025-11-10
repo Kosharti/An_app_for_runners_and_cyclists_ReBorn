@@ -31,19 +31,17 @@ class SignUpViewModel(
 
         viewModelScope.launch {
             try {
-                // Проверяем, нет ли уже пользователя с таким email
                 val existingUser = userRepository.getUserByEmail(email)
                 if (existingUser != null) {
                     _signUpState.value = SignUpState.Error("User with this email already exists")
                     return@launch
                 }
 
-                // Создаем нового пользователя
                 val user = User(
-                    id = email, // Используем email как ID для простоты
+                    id = email,
                     name = name,
                     email = email,
-                    password = password, // ДОБАВЬТЕ ЭТУ СТРОЧКУ
+                    password = password,
                     address = null,
                     profileImage = null,
                     height = null,
@@ -56,7 +54,6 @@ class SignUpViewModel(
 
                 userRepository.createUser(user)
 
-                // Автоматически логиним пользователя после регистрации
                 val loggedInUser = userRepository.login(email, password)
                 if (loggedInUser != null) {
                     _signUpState.value = SignUpState.Success(loggedInUser)

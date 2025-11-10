@@ -37,7 +37,6 @@ class OtherRunnersAdapter : ListAdapter<User, OtherRunnersAdapter.RunnerViewHold
             binding.tvRunnerAddress.text = runner.address ?: "No address provided"
             binding.tvRunnerStats.text = "Total: ${String.format("%.1f", runner.totalDistance)} km, ${RunCalculator.formatDuration(runner.totalTime)}"
 
-            // Загружаем фото пользователя с помощью Glide
             loadProfileImage(runner.profileImage)
 
             Timber.d("Loading user: ${runner.name}, photo: ${runner.profileImage}")
@@ -48,11 +47,10 @@ class OtherRunnersAdapter : ListAdapter<User, OtherRunnersAdapter.RunnerViewHold
                 try {
                     Timber.d("Attempting to load image: $imageUri")
 
-                    // Используем Glide для загрузки изображений
                     Glide.with(binding.root.context)
                         .load(imageUri)
-                        .error(R.drawable.base_profile_img) // Заглушка при ошибке
-                        .placeholder(R.drawable.base_profile_img) // Заглушка во время загрузки
+                        .error(R.drawable.base_profile_img)
+                        .placeholder(R.drawable.base_profile_img)
                         .into(binding.ivRunnerAvatar)
 
                     Timber.d("✅ Image loaded successfully: $imageUri")

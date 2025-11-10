@@ -49,14 +49,12 @@ class ProfileFragment : Fragment() {
 
     private var currentPhotoPath: String? = null
 
-    // Launcher для выбора фото из галереи
     private val galleryLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         uri?.let { handleImageSelection(it) }
     }
 
-    // Launcher для съёмки фото
     private val cameraLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -68,7 +66,6 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    // Launcher для запроса разрешений
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -106,9 +103,7 @@ class ProfileFragment : Fragment() {
         val popup = PopupMenu(requireContext(), binding.menuIcon)
         popup.menuInflater.inflate(R.menu.main_dropdown_menu, popup.menu)
 
-        // Устанавливаем стиль для текста в меню
         try {
-            // Для Android API 29+
             popup.setForceShowIcon(true)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -133,10 +128,8 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        // Показываем меню
         popup.show()
 
-        // Устанавливаем цвет текста программно для всех пунктов меню
         try {
             val popupMenu = popup::class.java.getDeclaredField("mPopup")
             popupMenu.isAccessible = true
@@ -169,21 +162,17 @@ class ProfileFragment : Fragment() {
             showImageSelectionDialog()
         }
 
-        // ДОБАВЛЯЕМ ОБРАБОТЧИК ДЛЯ КНОПКИ ВЫХОДА
         binding.btnLogout.setOnClickListener {
             showLogoutConfirmationDialog()
         }
     }
 
-    // ОБНОВЛЯЕМ МЕТОД ДЛЯ ПОДТВЕРЖДЕНИЯ ВЫХОДА - ПРОСТОЙ И НАДЕЖНЫЙ ВАРИАНТ
     private fun showLogoutConfirmationDialog() {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.custom_logout_dialog)
 
-        // Настройка прозрачного фона
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        // Обработчики кнопок
         dialog.findViewById<Button>(R.id.btnCancel).setOnClickListener {
             dialog.dismiss()
         }
@@ -193,50 +182,39 @@ class ProfileFragment : Fragment() {
             performLogout()
         }
 
-        // Делаем диалог отменяемым по клику вне его
         dialog.setCancelable(true)
         dialog.setCanceledOnTouchOutside(true)
 
         dialog.show()
 
-        // Настройка размера диалога
         dialog.window?.setLayout(
             (resources.displayMetrics.widthPixels * 0.85).toInt(),
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
     }
 
-    // ДОБАВЛЯЕМ МЕТОД ДЛЯ ВЫПОЛНЕНИЯ ВЫХОДА
     private fun performLogout() {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                // Получаем UserRepository через Application
                 val userRepository = (requireActivity().application as RunnersExchangeApplication).userRepository
 
-                // Получаем текущего пользователя
                 val currentUser = userRepository.getCurrentUser()
 
-                // Если пользователь вошел через Google, выходим из Google аккаунта
                 if (currentUser?.authProvider == "google") {
-                    // Создаем GoogleAuthManager для выхода
                     val googleAuthManager = GoogleAuthManager(requireActivity(), userRepository)
                     googleAuthManager.signOut()
                 }
 
-                // Выполняем выход из приложения
                 userRepository.logout()
 
-                // Перенаправляем на экран входа
                 navigateToSignIn()
 
             } catch (e: Exception) {
-                // В случае ошибки все равно пытаемся перенаправить на вход
                 navigateToSignIn()
             }
         }
     }
 
-    // ДОБАВЛЯЕМ МЕТОД ДЛЯ ПЕРЕНАПРАВЛЕНИЯ НА ЭКРАН ВХОДА
     private fun navigateToSignIn() {
         try {
             val intent = Intent(requireContext(), com.example.an_app_for_runners_and_cyclists.SignInActivity::class.java)
@@ -244,7 +222,6 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
             requireActivity().finish()
         } catch (e: Exception) {
-            // Fallback: просто завершаем активность
             requireActivity().finish()
         }
     }
@@ -318,7 +295,6 @@ class ProfileFragment : Fragment() {
     }
 
     private fun handleImageSelection(uri: Uri) {
-        // Для фото с камеры используем путь к файлу, для галереи - content URI
         val imagePath = if (uri.scheme == "file") {
             uri.path ?: uri.toString()
         } else {
@@ -327,13 +303,10 @@ class ProfileFragment : Fragment() {
 
         viewModel.updateProfileImage(imagePath)
 
-        // Показываем изображение сразу с правильным URI
         try {
             if (uri.scheme == "content") {
-                // Для content URI используем напрямую
                 binding.profileImg.setImageURI(uri)
             } else {
-                // Для file URI создаем File и затем URI
                 val file = File(uri.path ?: return)
                 if (file.exists()) {
                     val fileUri = Uri.fromFile(file)
@@ -353,14 +326,14 @@ class ProfileFragment : Fragment() {
         val height = binding.etHeight.text.toString().toIntOrNull()
         val weight = binding.etWeight.text.toString().toIntOrNull()
         val runningReason = binding.etRunningReason.text.toString().trim()
-        val address = binding.etAddress.text.toString().trim() // ДОБАВЬТЕ ЭТУ СТРОЧКУ
+        val address = binding.etAddress.text.toString().trim()
 
         if (name.isEmpty() || email.isEmpty()) {
             Snackbar.make(binding.root, "Please fill name and email", Snackbar.LENGTH_SHORT).show()
             return
         }
 
-        viewModel.saveUserData(name, email, height, weight, runningReason, address) // ОБНОВИТЕ ВЫЗОВ
+        viewModel.saveUserData(name, email, height, weight, runningReason, address)
     }
 
     private fun observeViewModel() {
@@ -424,10 +397,8 @@ class ProfileFragment : Fragment() {
     }
 
     private fun updateUI(user: com.example.an_app_for_runners_and_cyclists.data.model.User) {
-        // Обновляем верхнюю часть с именем
         binding.tvUserName.text = user.name
 
-        // Обновляем поля ввода
         binding.etUserName.setText(user.name)
         binding.etEmail.setText(user.email)
         binding.etHeight.setText(user.height?.toString() ?: "")
@@ -435,18 +406,14 @@ class ProfileFragment : Fragment() {
         binding.etRunningReason.setText(user.runningReason ?: "")
         binding.etAddress.setText(user.address ?: "")
 
-        // Обновляем фото профиля
         user.profileImage?.let { imagePath ->
             try {
-                // Проверяем, является ли путь абсолютным путем к файлу
                 if (imagePath.startsWith("/") && File(imagePath).exists()) {
-                    // Это путь к файлу во внутреннем хранилище
                     val file = File(imagePath)
                     val uri = Uri.fromFile(file)
                     binding.profileImg.setImageURI(uri)
                     Timber.d("Profile image loaded from internal storage: $imagePath")
                 } else {
-                    // Пытаемся загрузить как URI (для обратной совместимости)
                     val uri = Uri.parse(imagePath)
                     binding.profileImg.setImageURI(uri)
                     Timber.d("Profile image loaded as URI: $imagePath")
@@ -456,25 +423,19 @@ class ProfileFragment : Fragment() {
                 binding.profileImg.setImageResource(R.drawable.base_profile_img)
             }
         } ?: run {
-            // Если фото нет, устанавливаем заглушку
             binding.profileImg.setImageResource(R.drawable.base_profile_img)
         }
 
-        // Обновляем статистику
         updateStatsUI(user)
     }
 
     private fun updateStatsUI(user: com.example.an_app_for_runners_and_cyclists.data.model.User) {
-        // Используем статистику из ViewModel, которая вычисляется из пробежек
         binding.tvDistanceValue.text = String.format("%.1f km", user.totalDistance)
         binding.tvDurationValue.text = RunCalculator.formatDuration(user.totalTime)
         binding.tvCaloriesValue.text = "${user.totalCalories} kCal"
 
-        // Можно также использовать calculatedStats для дополнительной информации
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.calculatedStats.collect { stats ->
-                // Дополнительная статистика, если нужна
-                // Например, средний темп или количество пробежек
                 android.util.Log.d("ProfileFragment", "Total runs: ${stats.totalRuns}, Average pace: ${stats.averagePace}")
             }
         }

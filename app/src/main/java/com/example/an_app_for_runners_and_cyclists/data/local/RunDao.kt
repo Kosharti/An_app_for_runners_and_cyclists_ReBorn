@@ -30,7 +30,6 @@ interface RunDao {
     @Query("SELECT SUM(calories) FROM runs WHERE userId = :userId")
     fun getTotalCalories(userId: String): Flow<Int>
 
-    // Упрощенный запрос для группировки по месяцам
     @Query("SELECT * FROM runs WHERE userId = :userId ORDER BY startTime DESC")
     fun getAllRuns(userId: String): Flow<List<Run>>
 }

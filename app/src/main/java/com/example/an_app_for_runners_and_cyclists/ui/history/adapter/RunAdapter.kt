@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class RunAdapter(
-    private val onRunClick: (String) -> Unit // ДОБАВЛЯЕМ КОЛБЭК ДЛЯ КЛИКА
+    private val onRunClick: (String) -> Unit
 ) : ListAdapter<Run, RunAdapter.RunViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RunViewHolder {
@@ -27,7 +27,7 @@ class RunAdapter(
         holder.bind(run)
     }
 
-    inner class RunViewHolder( // ДЕЛАЕМ INNER CLASS ДЛЯ ДОСТУПА К КОЛБЭКУ
+    inner class RunViewHolder(
         private val binding: ItemRunBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -38,7 +38,6 @@ class RunAdapter(
             binding.tvDate.text = dateString
             binding.tvStats.text = "${String.format("%.2f", run.distance)} km in ${RunCalculator.formatDuration(run.duration)}"
 
-            // ОБРАБОТКА КЛИКА НА ПРОБЕЖКУ
             binding.root.setOnClickListener {
                 onRunClick(run.id)
             }

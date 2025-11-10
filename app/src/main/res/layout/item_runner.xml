@@ -10,7 +10,6 @@
     android:padding="16dp"
     android:gravity="center_vertical">
 
-    <!-- Avatar Placeholder -->
     <androidx.cardview.widget.CardView
         android:layout_width="50dp"
         android:layout_height="50dp"

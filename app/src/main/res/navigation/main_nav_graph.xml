@@ -17,7 +17,6 @@
         android:label="Run History"
         tools:layout="@layout/fragment_run_history">
 
-        <!-- ДОБАВЛЯЕМ ДЕЙСТВИЕ ДЛЯ ПЕРЕХОДА К ДЕТАЛЯМ ПРОБЕЖКИ -->
         <action
             android:id="@+id/action_runHistoryFragment_to_runDetailsFragment"
             app:destination="@id/runDetailsFragment" />

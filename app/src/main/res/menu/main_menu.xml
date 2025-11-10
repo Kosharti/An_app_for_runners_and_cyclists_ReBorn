@@ -26,7 +26,6 @@
         android:title="Community"
         app:showAsAction="ifRoom" />
 
-    <!-- Три точки для остальных пунктов -->
     <item
         android:id="@+id/action_more"
         android:title="More"

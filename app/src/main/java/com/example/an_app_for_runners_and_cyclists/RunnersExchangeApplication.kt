@@ -25,7 +25,6 @@ class RunnersExchangeApplication : Application() {
         RunDatabase.getInstance(this)
     }
 
-    // Делаем userRepository публичным
     val userRepository: UserRepository by lazy {
         UserRepositoryImpl(
             userDao = database.userDao(),
@@ -49,11 +48,10 @@ class RunnersExchangeApplication : Application() {
 
         Timber.d("Application started")
 
-        // Initialize data
         val runRepository = RunRepositoryImpl(database.runDao())
         val userRepository = UserRepositoryImpl(
             userDao = database.userDao(),
-            runRepository = runRepository, // ДОБАВЛЯЕМ ЭТУ СТРОКУ
+            runRepository = runRepository,
             context = this
         )
         val dataInitializer = DataInitializer(userRepository, runRepository)

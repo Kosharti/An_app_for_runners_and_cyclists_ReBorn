@@ -5,12 +5,10 @@
     android:layout_height="match_parent"
     android:background="@drawable/sign_in_bg">
 
-    <!-- Основной градиентный фон -->
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- Логотип RUNNERS XCHANGE -->
     <ImageView
         android:layout_width="132dp"
         android:layout_height="62dp"
@@ -19,7 +17,6 @@
         android:src="@drawable/logo"
         android:scaleType="fitCenter" />
 
-    <!-- Текст "Login With" -->
     <TextView
         android:id="@+id/tvLoginWith"
         android:layout_width="wrap_content"
@@ -31,7 +28,6 @@
         android:layout_marginTop="494dp"
         android:fontFamily="@font/montserrat_regular" />
 
-    <!-- Социальные кнопки -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,7 +62,6 @@
 
     </LinearLayout>
 
-    <!-- Разделитель "Or" -->
     <TextView
         android:id="@+id/tvOr"
         android:layout_width="wrap_content"
@@ -78,7 +73,6 @@
         android:layout_marginTop="601dp"
         android:fontFamily="@font/montserrat_regular" />
 
-    <!-- Линия под "Or" -->
     <View
         android:id="@+id/viewDivider"
         android:layout_width="50dp"
@@ -87,7 +81,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="621dp" />
 
-    <!-- Кнопка создания аккаунта -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCreateAccount"
         android:layout_width="205dp"
@@ -103,7 +96,6 @@
         android:fontFamily="@font/montserrat_bold" />
 
 
-    <!-- fragment_sign_in.xml - добавляем ProgressBar если его нет -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"

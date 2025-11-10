@@ -10,25 +10,20 @@ interface UserRepository {
     suspend fun deleteUser(userId: String)
     suspend fun getUserByEmail(email: String): User?
 
-    // Новые методы для управления сессией
     suspend fun login(email: String, password: String): User?
     suspend fun getCurrentUser(): User?
     fun logout()
     suspend fun isLoggedIn(): Boolean
 
-    // Новые методы для работы со статистикой
     suspend fun updateUserStats(userId: String)
     suspend fun getUsersWithStats(): Flow<List<User>>
     suspend fun recalculateAllUsersStats()
 
-    // Новый метод для получения всех пользователей
     suspend fun getAllUsers(): List<User>
 
-    // Новые методы для OAuth
     suspend fun findUserByProvider(provider: String, providerId: String): User?
     suspend fun createUserFromOAuth(user: User): User
     suspend fun linkGoogleAccount(userId: String, googleUser: User)
 
-    // Добавляем метод для установки текущего пользователя
     suspend fun setCurrentUser(user: User)
 }

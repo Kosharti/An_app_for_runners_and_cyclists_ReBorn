@@ -31,8 +31,6 @@ class ViewModelFactory(private val application: RunnersExchangeApplication) : Vi
     }
 
     private val googleAuthManager: GoogleAuthManager by lazy {
-        // Создаем с заглушкой для Activity, т.к. ViewModel не должна хранить ссылку на Activity
-        // Реальная инициализация будет во Fragment
         GoogleAuthManager(application as Activity, userRepository)
     }
 
@@ -45,7 +43,6 @@ class ViewModelFactory(private val application: RunnersExchangeApplication) : Vi
             modelClass.isAssignableFrom(SignUpViewModel::class.java) -> {
                 SignUpViewModel(userRepository) as T
             }
-            // Добавляем SignInViewModel
             modelClass.isAssignableFrom(SignInViewModel::class.java) -> {
                 SignInViewModel(userRepository) as T
             }
@@ -63,7 +60,7 @@ class ViewModelFactory(private val application: RunnersExchangeApplication) : Vi
                 ProfileViewModel(userRepository, runRepository) as T
             }
             modelClass.isAssignableFrom(OtherRunnersViewModel::class.java) -> {
-                OtherRunnersViewModel(userRepository) as T // ИСПРАВЛЯЕМ: добавляем userRepository
+                OtherRunnersViewModel(userRepository) as T
             }
             modelClass.isAssignableFrom(RunDetailsViewModel::class.java) -> {
                 RunDetailsViewModel(runRepository) as T

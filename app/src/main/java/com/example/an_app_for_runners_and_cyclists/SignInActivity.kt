@@ -15,25 +15,21 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Убираем ActionBar полностью
         supportActionBar?.hide()
 
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // ПРОВЕРЯЕМ, НЕ АВТОРИЗОВАН ЛИ УЖЕ ПОЛЬЗОВАТЕЛЬ
         checkIfUserAlreadyLoggedIn()
         setupNavigation()
     }
 
-    // ДОБАВЛЯЕМ МЕТОД ДЛЯ ПРОВЕРКИ АВТОРИЗАЦИИ
     private fun checkIfUserAlreadyLoggedIn() {
         lifecycleScope.launch {
             val userRepository = (application as RunnersExchangeApplication).userRepository
             val isLoggedIn = userRepository.isLoggedIn()
 
             if (isLoggedIn) {
-                // Если пользователь уже авторизован, переходим сразу в основное приложение
                 navigateToMainApp()
             }
         }
@@ -42,10 +38,8 @@ class SignInActivity : AppCompatActivity() {
     private fun setupNavigation() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_sign_in) as NavHostFragment
-        // NavController будет автоматически настроен через XML
     }
 
-    // Функция для перехода к основному приложению
     fun navigateToMainApp() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()

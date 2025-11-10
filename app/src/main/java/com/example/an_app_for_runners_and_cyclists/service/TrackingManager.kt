@@ -35,7 +35,6 @@ class TrackingManager @Inject constructor(
             locationService = binder.getService()
             isBound = true
 
-            // Подписываемся на обновления из сервиса
             observeServiceUpdates()
         }
 
@@ -75,8 +74,6 @@ class TrackingManager @Inject constructor(
     }
 
     private fun observeServiceUpdates() {
-        // Здесь будем подписываться на обновления из LocationService
-        // Для упрощения будем использовать прямые вызовы
     }
 
     fun updateUIValues(elapsed: Long, dist: Float, cals: Int) {

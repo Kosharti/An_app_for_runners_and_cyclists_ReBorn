@@ -5,12 +5,10 @@
     android:layout_height="match_parent"
     android:background="@drawable/sign_in_bg">
 
-    <!-- Основной градиентный фон -->
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- Кнопка назад -->
     <ImageView
         android:id="@+id/btnBack"
         android:layout_width="24dp"
@@ -20,7 +18,6 @@
         android:src="@drawable/arrow_back"
         android:scaleType="centerInside" />
 
-    <!-- Логотип -->
     <ImageView
         android:layout_width="132dp"
         android:layout_height="62dp"
@@ -29,7 +26,6 @@
         android:src="@drawable/logo"
         android:scaleType="fitCenter" />
 
-    <!-- Заголовок формы -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -41,7 +37,6 @@
         android:layout_marginTop="305dp"
         android:fontFamily="@font/montserrat_regular" />
 
-    <!-- Поле Full Name -->
     <EditText
         android:id="@+id/etFullName"
         android:layout_width="270dp"
@@ -59,7 +54,6 @@
         android:inputType="textEmailAddress"
         android:fontFamily="@font/roboto_regular" />
 
-    <!-- Поле Email -->
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="270dp"
@@ -77,8 +71,6 @@
         android:inputType="textEmailAddress"
         android:fontFamily="@font/roboto_regular" />
 
-    <!-- Поле Password -->
-    <!-- Поле Password -->
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="270dp"
@@ -96,7 +88,6 @@
         android:inputType="textPassword"
         android:fontFamily="@font/roboto_regular" />
 
-    <!-- Кнопка Submit -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSubmit"
         android:layout_width="205dp"
@@ -111,7 +102,6 @@
         android:layout_marginTop="548dp"
         android:fontFamily="@font/montserrat_bold" />
 
-    <!-- Progress Bar -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"

@@ -1,4 +1,3 @@
-// AuthResult.kt в пакете auth
 package com.example.an_app_for_runners_and_cyclists.auth
 
 import com.example.an_app_for_runners_and_cyclists.data.model.User

@@ -70,7 +70,6 @@ class LocationService : Service() {
                 null
             )
         } catch (e: SecurityException) {
-            // Handle permission exception
             _trackingState.value = TrackingState.ERROR
         }
     }
@@ -82,7 +81,6 @@ class LocationService : Service() {
         val endTime = System.currentTimeMillis()
         val duration = endTime - startTime
 
-        // Calculate calories (simplified formula)
         val calories = (totalDistance * 60).roundToInt()
 
         return RunData(
@@ -130,7 +128,6 @@ class LocationService : Service() {
 
                     _currentLocation.value = latLng
 
-                    // Calculate distance
                     lastLocation?.let { last ->
                         val distance = last.distanceTo(location)
                         totalDistance += distance
@@ -138,7 +135,6 @@ class LocationService : Service() {
 
                     lastLocation = location
 
-                    // Add to tracked locations
                     _trackedLocations.value = _trackedLocations.value + latLng
                 }
             }
@@ -167,10 +163,7 @@ class LocationService : Service() {
         fun getService(): LocationService = this@LocationService
     }
 
-    // Добавляем в класс LocationService
     fun updateTrackingData(elapsedTime: Long, distance: Float, calories: Int) {
-        // Этот метод будет вызываться из TrackingManager для обновления данных
-        // в реальном времени во время трекинга
     }
 
     data class RunData(

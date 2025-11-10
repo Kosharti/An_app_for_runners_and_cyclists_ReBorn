@@ -32,7 +32,6 @@ class OtherRunnersViewModel(
                     val allUsers = userRepository.getAllUsers()
                     Timber.d("📊 Found ${allUsers.size} total users in database")
 
-                    // Логируем всех пользователей
                     allUsers.forEach { user ->
                         Timber.d("👤 User: ${user.name}, Photo: ${user.profileImage}, Distance: ${user.totalDistance}km")
                     }

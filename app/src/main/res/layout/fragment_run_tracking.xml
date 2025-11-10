@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_tracking">
 
-    <!-- Твой кастомный header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +13,6 @@
         android:gravity="center_vertical"
         android:padding="16dp">
 
-        <!-- Menu Icon -->
         <LinearLayout
             android:id="@+id/menuIcon"
             android:layout_width="20dp"
@@ -50,7 +48,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
-        <!-- Заголовок (будет меняться) -->
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
@@ -65,7 +62,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
-        <!-- Иконка истории (справа) -->
         <ImageButton
             android:id="@+id/history_icon"
             android:layout_width="24dp"
@@ -75,7 +71,6 @@
 
     </LinearLayout>
 
-    <!-- Main Content -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -83,7 +78,6 @@
         android:gravity="center"
         android:paddingBottom="180dp">
 
-        <!-- Duration -->
         <TextView
             android:id="@+id/tvDuration"
             android:layout_width="wrap_content"
@@ -101,7 +95,6 @@
             android:textSize="16sp"
             android:layout_marginBottom="20dp" />
 
-        <!-- Distance -->
         <TextView
             android:id="@+id/tvDistance"
             android:layout_width="wrap_content"
@@ -119,7 +112,6 @@
             android:textSize="16sp"
             android:layout_marginBottom="20dp" />
 
-        <!-- Calories -->
         <TextView
             android:id="@+id/tvCalories"
             android:layout_width="wrap_content"
@@ -138,7 +130,6 @@
 
     </LinearLayout>
 
-    <!-- Start/Stop Button -->
     <FrameLayout
         android:id="@+id/startButton"
         android:layout_width="142dp"
@@ -148,7 +139,6 @@
         android:layout_marginBottom="120dp"
         android:visibility="visible">
 
-        <!-- Outer Circle -->
         <View
             android:layout_width="142dp"
             android:layout_height="142dp"
@@ -157,7 +147,6 @@
             android:clickable="false"
             android:focusable="false"/>
 
-        <!-- Middle Circle -->
         <View
             android:layout_width="112dp"
             android:layout_height="112dp"
@@ -166,7 +155,6 @@
             android:clickable="false"
             android:focusable="false"/>
 
-        <!-- Inner Circle -->
         <View
             android:layout_width="84dp"
             android:layout_height="84dp"
@@ -175,7 +163,6 @@
             android:clickable="false"
             android:focusable="false"/>
 
-        <!-- Play Icon -->
         <ImageButton
             android:layout_width="72dp"
             android:layout_height="72dp"
@@ -187,7 +174,6 @@
 
     </FrameLayout>
 
-    <!-- Stop Button -->
     <FrameLayout
         android:id="@+id/stopButton"
         android:layout_width="142dp"
@@ -197,7 +183,6 @@
         android:layout_marginBottom="120dp"
         android:visibility="gone">
 
-        <!-- Outer Circle -->
         <View
             android:layout_width="142dp"
             android:layout_height="142dp"
@@ -206,7 +191,6 @@
             android:clickable="false"
             android:focusable="false"/>
 
-        <!-- Middle Circle -->
         <View
             android:layout_width="112dp"
             android:layout_height="112dp"
@@ -215,7 +199,6 @@
             android:clickable="false"
             android:focusable="false"/>
 
-        <!-- Inner Circle -->
         <View
             android:layout_width="84dp"
             android:layout_height="84dp"
@@ -224,7 +207,6 @@
             android:clickable="false"
             android:focusable="false"/>
 
-        <!-- Stop Icon -->
         <ImageButton
             android:layout_width="72dp"
             android:layout_height="72dp"
@@ -237,7 +219,6 @@
 
     </FrameLayout>
 
-    <!-- Bottom Info -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -248,7 +229,6 @@
         android:padding="16dp"
         android:layout_marginBottom="16dp">
 
-        <!-- Weather Info -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -281,14 +261,12 @@
 
         </LinearLayout>
 
-        <!-- Heart Rate Info -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <!-- Heart Icon -->
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="26dp"

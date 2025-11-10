@@ -28,12 +28,11 @@ object RunCalculator {
     }
 
     fun calculateCalories(distance: Float, weight: Float = 70f): Int {
-        // Simplified formula: calories = distance(km) * weight(kg) * 1.036
         return (distance * weight * 1.036).toInt()
     }
 
     private fun calculateHaversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Float {
-        val R = 6371 // Earth radius in kilometers
+        val R = 6371
         val dLat = Math.toRadians(lat2 - lat1)
         val dLon = Math.toRadians(lon2 - lon1)
         val a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
@@ -62,7 +61,6 @@ object RunCalculator {
         return String.format("%d:%02d", minutes, seconds)
     }
 
-    // Добавляем эту функцию в объект RunCalculator
     fun formatDate(timestamp: Long): String {
         val dateFormat = SimpleDateFormat("EEE, MMM dd yyyy 'at' hh:mm a", Locale.getDefault())
         return dateFormat.format(timestamp)

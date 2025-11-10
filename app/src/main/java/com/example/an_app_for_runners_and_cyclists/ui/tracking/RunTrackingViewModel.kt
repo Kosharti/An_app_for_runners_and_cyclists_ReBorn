@@ -36,7 +36,7 @@ class RunTrackingViewModel(
     private val _pace = MutableStateFlow(0f)
     val pace: StateFlow<Float> = _pace.asStateFlow()
 
-    private val _heartRate = MutableStateFlow(75) // Начинаем с нормального пульса
+    private val _heartRate = MutableStateFlow(75)
     val heartRate: StateFlow<Int> = _heartRate.asStateFlow()
 
     private val _weatherInfo = MutableStateFlow(WeatherInfo(22, "Sunny", "☀️"))
@@ -44,10 +44,9 @@ class RunTrackingViewModel(
 
     private var trackingStartTime: Long = 0L
     private var simulationJob: kotlinx.coroutines.Job? = null
-    private var heartRateSimulationJob: kotlinx.coroutines.Job? = null // ДОБАВЛЯЕМ ОБЪЯВЛЕНИЕ
+    private var heartRateSimulationJob: kotlinx.coroutines.Job? = null
     private var weatherSimulationJob: kotlinx.coroutines.Job? = null
 
-    // Список возможных погодных условий для симуляции
     private val weatherConditions = listOf(
         WeatherInfo(22, "Sunny", "☀️"),
         WeatherInfo(18, "Cloudy", "☁️"),
@@ -57,25 +56,21 @@ class RunTrackingViewModel(
         WeatherInfo(12, "Windy", "💨")
     )
 
-    // Flow для показа подтверждения сохранения
     private val _showSaveConfirmation = MutableStateFlow(false)
     val showSaveConfirmation: StateFlow<Boolean> = _showSaveConfirmation.asStateFlow()
 
-    // ПРОСТАЯ СИМУЛЯЦИЯ - без TrackingManager и LocationService
     fun startTracking() {
         Timber.d("🚀 SIMULATION: Starting tracking simulation")
 
         _trackingState.value = TrackingState.TRACKING
         trackingStartTime = System.currentTimeMillis()
 
-        // Сбрасываем значения
         _elapsedTime.value = 0L
         _distance.value = 0f
         _calories.value = 0
         _pace.value = 0f
-        _heartRate.value = 75 // Начальный пульс
+        _heartRate.value = 75
 
-        // Запускаем симуляцию бега
         simulationJob = viewModelScope.launch {
             var simulatedDistance = 0f
             var lastUpdateTime = trackingStartTime
@@ -85,7 +80,6 @@ class RunTrackingViewModel(
                 val timePassed = currentTime - lastUpdateTime
 
                 if (timePassed >= 1000) {
-                    // Симулируем бег: примерно 10 км/ч = 2.78 м/с
                     val distanceIncrement = 2.78f
                     simulatedDistance += distanceIncrement / 1000
 
@@ -103,10 +97,8 @@ class RunTrackingViewModel(
             }
         }
 
-        // Запускаем симуляцию пульса
         startHeartRateSimulation()
 
-        // Запускаем симуляцию погоды
         startWeatherSimulation()
     }
 
@@ -117,23 +109,19 @@ class RunTrackingViewModel(
             var baseHeartRate = 75
 
             while (_trackingState.value == TrackingState.TRACKING) {
-                // Во время бега пульс постепенно увеличивается до 120-160
                 val targetHeartRate = 120 + (Math.random() * 40).toInt()
 
-                // Плавное изменение пульса
                 if (baseHeartRate < targetHeartRate) {
                     baseHeartRate += 2
                 }
 
-                // Добавляем небольшие случайные колебания ±5
                 val currentHeartRate = baseHeartRate + (Math.random() * 10 - 5).toInt()
                 _heartRate.value = currentHeartRate.coerceIn(70, 170)
 
                 Timber.d("💓 Heart rate: ${_heartRate.value} BPM")
-                delay(3000) // Обновляем пульс каждые 3 секунды
+                delay(3000)
             }
 
-            // После остановки бега пульс постепенно снижается
             while (baseHeartRate > 75) {
                 baseHeartRate -= 1
                 _heartRate.value = baseHeartRate + (Math.random() * 10 - 5).toInt()
@@ -149,14 +137,12 @@ class RunTrackingViewModel(
             var currentWeatherIndex = 0
 
             while (true) {
-                // Меняем погоду каждые 30 секунд
                 delay(60000)
 
                 if (_trackingState.value != TrackingState.TRACKING) {
                     continue
                 }
 
-                // Выбираем случайную погоду (может повторяться)
                 val randomIndex = (Math.random() * weatherConditions.size).toInt()
                 _weatherInfo.value = weatherConditions[randomIndex]
 
@@ -171,9 +157,8 @@ class RunTrackingViewModel(
         _trackingState.value = TrackingState.IDLE
         simulationJob?.cancel()
         heartRateSimulationJob?.cancel()
-        weatherSimulationJob?.cancel() // ДОБАВЛЯЕМ ОТМЕНУ ПОГОДНОЙ СИМУЛЯЦИИ
+        weatherSimulationJob?.cancel()
 
-        // Сохраняем пробежку
         saveSimulatedRun()
 
         Timber.d("✅ SIMULATION: Final stats - Distance: ${_distance.value}km, Time: ${_elapsedTime.value}ms")
@@ -192,7 +177,7 @@ class RunTrackingViewModel(
                     duration = _elapsedTime.value,
                     calories = _calories.value,
                     pace = _pace.value,
-                    coordinates = emptyList(), // В симуляции нет реальных координат
+                    coordinates = emptyList(),
                     weatherCondition = _weatherInfo.value.condition,
                     temperature = _weatherInfo.value.temperature,
                     averageHeartRate = _heartRate.value
@@ -201,7 +186,6 @@ class RunTrackingViewModel(
                 runRepository.saveRun(run)
                 Timber.d("💾 SIMULATION: Run saved to database - ID: ${run.id}")
 
-                // Показываем уведомление о сохранении
                 _showSaveConfirmation.value = true
             } else {
                 Timber.e("❌ SIMULATION: No current user - cannot save run")
@@ -209,7 +193,6 @@ class RunTrackingViewModel(
         }
     }
 
-    // Для сброса значений после сохранения
     fun resetTrackingData() {
         _elapsedTime.value = 0L
         _distance.value = 0f

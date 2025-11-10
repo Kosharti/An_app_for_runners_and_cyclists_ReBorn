@@ -46,12 +46,10 @@ class RunDetailsFragment : Fragment() {
     }
 
     private fun setupHeader() {
-        // Обработчик меню (три полоски)
         binding.menuIcon.setOnClickListener {
             showDropdownMenu()
         }
 
-        // Кнопка назад
         binding.btnBack.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -100,8 +98,6 @@ class RunDetailsFragment : Fragment() {
         binding.tvCalories.text = "${run.calories} kCal"
         binding.tvPace.text = "${RunCalculator.formatPace(run.pace)} min/km"
 
-        // Показываем дополнительную информацию, если она есть
-        // ИСПРАВЛЯЕМ: используем binding вместо findViewById
         val additionalInfoLayout = binding.root.findViewById<LinearLayout>(R.id.additional_info_layout)
 
         run.weatherCondition?.let { weather ->
@@ -119,7 +115,6 @@ class RunDetailsFragment : Fragment() {
             binding.tvHeartRate.visibility = View.VISIBLE
         } ?: run { binding.tvHeartRate.visibility = View.GONE }
 
-        // Показываем блок дополнительной информации, если есть хотя бы одна дополнительная метрика
         val hasAdditionalInfo = run.weatherCondition != null || run.temperature != null || run.averageHeartRate != null
         additionalInfoLayout?.visibility = if (hasAdditionalInfo) View.VISIBLE else View.GONE
     }
