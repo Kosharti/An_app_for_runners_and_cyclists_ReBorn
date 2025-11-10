@@ -75,6 +75,14 @@
             android:src="@drawable/done_all"
             android:background="@android:color/transparent"/>
 
+        <ImageButton
+            android:id="@+id/btnDeleteAccount"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/delete_icon"
+            android:background="@android:color/transparent"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
     <RelativeLayout

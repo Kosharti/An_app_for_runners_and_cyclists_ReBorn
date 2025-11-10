@@ -43,4 +43,8 @@ class RunRepositoryImpl(
     override fun getAllRuns(userId: String): Flow<List<Run>> {
         return runDao.getAllRuns(userId)
     }
+
+    override suspend fun deleteAllRunsForUser(userId: String) {
+        runDao.deleteAllRunsForUser(userId)
+    }
 }

@@ -161,4 +161,21 @@ class UserRepositoryImpl(
         prefs.edit().putString("current_user_id", user.id).apply()
         Timber.d("✅ Current user set to: ${user.name}")
     }
+
+    override suspend fun deleteCurrentUser() {
+        withContext(Dispatchers.IO) {
+            try {
+                val currentUser = getCurrentUser()
+                currentUser?.let { user ->
+                    runRepository.deleteAllRunsForUser(user.id)
+                    userDao.deleteUser(user.id)
+                    logout()
+                    Timber.d("✅ User account deleted successfully: ${user.id}")
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "❌ Error deleting user account")
+                throw e
+            }
+        }
+    }
 }

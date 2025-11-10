@@ -26,4 +26,6 @@ interface UserRepository {
     suspend fun linkGoogleAccount(userId: String, googleUser: User)
 
     suspend fun setCurrentUser(user: User)
+
+    suspend fun deleteCurrentUser()
 }

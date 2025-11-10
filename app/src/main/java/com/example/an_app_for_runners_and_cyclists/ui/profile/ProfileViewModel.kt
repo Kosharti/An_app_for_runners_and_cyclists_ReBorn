@@ -40,6 +40,9 @@ class ProfileViewModel(
     private val _calculatedStats = MutableStateFlow(StatisticsCalculator.UserStats(0f, 0L, 0, 0, 0f))
     val calculatedStats: StateFlow<StatisticsCalculator.UserStats> = _calculatedStats.asStateFlow()
 
+    private val _deleteState = MutableStateFlow<DeleteState>(DeleteState.Idle)
+    val deleteState: StateFlow<DeleteState> = _deleteState.asStateFlow()
+
     init {
         loadCurrentUserWithLiveStats()
     }
@@ -213,6 +216,26 @@ class ProfileViewModel(
             inputStream?.close()
             outputStream?.close()
         }
+    }
+
+    fun deleteAccount() {
+        _deleteState.value = DeleteState.Loading
+
+        viewModelScope.launch {
+            try {
+                userRepository.deleteCurrentUser()
+                _deleteState.value = DeleteState.Success
+            } catch (e: Exception) {
+                _deleteState.value = DeleteState.Error("Failed to delete account: ${e.message}")
+            }
+        }
+    }
+
+    sealed class DeleteState {
+        object Idle : DeleteState()
+        object Loading : DeleteState()
+        object Success : DeleteState()
+        data class Error(val message: String) : DeleteState()
     }
 
     sealed class SaveState {

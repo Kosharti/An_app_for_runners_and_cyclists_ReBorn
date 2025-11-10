@@ -32,4 +32,7 @@ interface RunDao {
 
     @Query("SELECT * FROM runs WHERE userId = :userId ORDER BY startTime DESC")
     fun getAllRuns(userId: String): Flow<List<Run>>
+
+    @Query("DELETE FROM runs WHERE userId = :userId")
+    suspend fun deleteAllRunsForUser(userId: String)
 }

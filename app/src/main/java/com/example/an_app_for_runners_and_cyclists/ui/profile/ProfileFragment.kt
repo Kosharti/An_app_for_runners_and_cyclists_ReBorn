@@ -165,6 +165,36 @@ class ProfileFragment : Fragment() {
         binding.btnLogout.setOnClickListener {
             showLogoutConfirmationDialog()
         }
+
+        binding.btnDeleteAccount.setOnClickListener {
+            showDeleteAccountConfirmationDialog()
+        }
+    }
+
+    private fun showDeleteAccountConfirmationDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.custom_delete_account_dialog)
+
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialog.findViewById<Button>(R.id.btnCancel).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.findViewById<Button>(R.id.btnDelete).setOnClickListener {
+            dialog.dismiss()
+            viewModel.deleteAccount()
+        }
+
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(true)
+
+        dialog.show()
+
+        dialog.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.85).toInt(),
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
     }
 
     private fun showLogoutConfirmationDialog() {
@@ -366,18 +396,47 @@ class ProfileFragment : Fragment() {
                     ProfileViewModel.SaveState.Idle -> {
                         showSaveProgress(false)
                     }
+
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.deleteState.collectLatest { state ->
+                when (state) {
+                    is ProfileViewModel.DeleteState.Loading -> {
+                        showDeleteProgress(true)
+                    }
+                    is ProfileViewModel.DeleteState.Success -> {
+                        showDeleteProgress(false)
+                        Snackbar.make(binding.root, "Account deleted successfully", Snackbar.LENGTH_SHORT).show()
+                        navigateToSignIn()
+                    }
+                    is ProfileViewModel.DeleteState.Error -> {
+                        showDeleteProgress(false)
+                        Snackbar.make(binding.root, "Error: ${state.message}", Snackbar.LENGTH_LONG).show()
+                    }
+                    ProfileViewModel.DeleteState.Idle -> {
+                        showDeleteProgress(false)
+                    }
                 }
             }
         }
     }
 
+    private fun showDeleteProgress(show: Boolean) {
+        binding.btnDeleteAccount.isEnabled = !show
+    }
+
     private fun updateEditModeUI(editing: Boolean) {
         if (editing) {
             binding.btnSave.visibility = View.VISIBLE
+            binding.btnDeleteAccount.visibility = View.VISIBLE
             binding.btnEdit.visibility = View.GONE
             enableEditing(true)
         } else {
             binding.btnSave.visibility = View.GONE
+            binding.btnDeleteAccount.visibility = View.GONE
             binding.btnEdit.visibility = View.VISIBLE
             enableEditing(false)
         }

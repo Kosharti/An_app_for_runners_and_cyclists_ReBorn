@@ -13,4 +13,5 @@ interface RunRepository {
     fun getTotalDuration(userId: String): Flow<Long>
     fun getTotalCalories(userId: String): Flow<Int>
     fun getAllRuns(userId: String): Flow<List<Run>>
+    suspend fun deleteAllRunsForUser(userId: String)
 }
