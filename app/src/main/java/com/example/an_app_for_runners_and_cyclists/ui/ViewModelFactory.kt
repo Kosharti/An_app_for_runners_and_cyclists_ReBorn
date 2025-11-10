@@ -1,8 +1,10 @@
 package com.example.an_app_for_runners_and_cyclists.ui
 
+import android.app.Activity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.an_app_for_runners_and_cyclists.RunnersExchangeApplication
+import com.example.an_app_for_runners_and_cyclists.auth.GoogleAuthManager
 import com.example.an_app_for_runners_and_cyclists.data.repository.RunRepository
 import com.example.an_app_for_runners_and_cyclists.data.repository.RunRepositoryImpl
 import com.example.an_app_for_runners_and_cyclists.data.repository.UserRepository
@@ -28,6 +30,12 @@ class ViewModelFactory(private val application: RunnersExchangeApplication) : Vi
         )
     }
 
+    private val googleAuthManager: GoogleAuthManager by lazy {
+        // Создаем с заглушкой для Activity, т.к. ViewModel не должна хранить ссылку на Activity
+        // Реальная инициализация будет во Fragment
+        GoogleAuthManager(application as Activity, userRepository)
+    }
+
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
@@ -36,6 +44,10 @@ class ViewModelFactory(private val application: RunnersExchangeApplication) : Vi
             }
             modelClass.isAssignableFrom(SignUpViewModel::class.java) -> {
                 SignUpViewModel(userRepository) as T
+            }
+            // Добавляем SignInViewModel
+            modelClass.isAssignableFrom(SignInViewModel::class.java) -> {
+                SignInViewModel(userRepository) as T
             }
             modelClass.isAssignableFrom(RunTrackingViewModel::class.java) -> {
                 RunTrackingViewModel(

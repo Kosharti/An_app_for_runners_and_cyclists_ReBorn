@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Proguard rules для Google Play Services
+-keep class com.google.android.gms.** { *; }
+-keep class com.google.android.gms.auth.** { *; }
+-dontwarn com.google.android.gms.**

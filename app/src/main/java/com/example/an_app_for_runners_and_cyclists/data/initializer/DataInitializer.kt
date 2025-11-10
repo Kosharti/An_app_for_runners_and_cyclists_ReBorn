@@ -20,13 +20,13 @@ class DataInitializer(
 
             val user = User(
                 id = userId,
-                name = "Bobby A. Munson",
-                email = "munson1450@gmail.com",
-                password = "password123", // ДОБАВЬТЕ ПАРОЛЬ
+                name = "Emily Stone",
+                email = "emily1276@gmail.com",
+                password = "qwerty123", // ДОБАВЬТЕ ПАРОЛЬ
                 address = "4865 Plainfield Avenue\nSyracuse, NY 13202",
                 profileImage = null,
-                height = 180,
-                weight = 75,
+                height = 168,
+                weight = 68,
                 runningReason = "Fitness and health",
                 totalDistance = 15f,
                 totalTime = 10251000L, // 2:50:51 in milliseconds

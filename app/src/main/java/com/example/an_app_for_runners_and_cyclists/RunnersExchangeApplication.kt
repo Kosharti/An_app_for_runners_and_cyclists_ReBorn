@@ -4,7 +4,9 @@ import android.app.Application
 import android.content.Context
 import com.example.an_app_for_runners_and_cyclists.data.initializer.DataInitializer
 import com.example.an_app_for_runners_and_cyclists.data.local.RunDatabase
+import com.example.an_app_for_runners_and_cyclists.data.repository.RunRepository
 import com.example.an_app_for_runners_and_cyclists.data.repository.RunRepositoryImpl
+import com.example.an_app_for_runners_and_cyclists.data.repository.UserRepository
 import com.example.an_app_for_runners_and_cyclists.data.repository.UserRepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +24,20 @@ class RunnersExchangeApplication : Application() {
     val database: RunDatabase by lazy {
         RunDatabase.getInstance(this)
     }
+
+    // Делаем userRepository публичным
+    val userRepository: UserRepository by lazy {
+        UserRepositoryImpl(
+            userDao = database.userDao(),
+            runRepository = runRepository,
+            context = this
+        )
+    }
+
+    private val runRepository: RunRepository by lazy {
+        RunRepositoryImpl(database.runDao())
+    }
+
 
     override fun onCreate() {
         super.onCreate()

@@ -24,7 +24,7 @@
         android:id="@+id/tvLoginWith"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login With"
+        android:text="Login/Sign Up With"
         android:textColor="#FFFFFF"
         android:textSize="13sp"
         android:layout_centerHorizontal="true"
@@ -42,10 +42,10 @@
 
 
         <ImageButton
-            android:id="@+id/facebook"
+            android:id="@+id/vk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/facebook"
+            app:srcCompat="@drawable/vk_icon"
             android:background="@android:color/transparent"
             android:layout_marginEnd="20dp"/>
 
@@ -102,5 +102,14 @@
         android:layout_marginTop="640dp"
         android:fontFamily="@font/montserrat_bold" />
 
+
+    <!-- fragment_sign_in.xml - добавляем ProgressBar если его нет -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="560dp"
+        android:visibility="gone" />
 
 </RelativeLayout>

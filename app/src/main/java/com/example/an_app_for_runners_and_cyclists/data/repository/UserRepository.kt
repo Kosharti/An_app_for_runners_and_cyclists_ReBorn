@@ -23,4 +23,12 @@ interface UserRepository {
 
     // Новый метод для получения всех пользователей
     suspend fun getAllUsers(): List<User>
+
+    // Новые методы для OAuth
+    suspend fun findUserByProvider(provider: String, providerId: String): User?
+    suspend fun createUserFromOAuth(user: User): User
+    suspend fun linkGoogleAccount(userId: String, googleUser: User)
+
+    // Добавляем метод для установки текущего пользователя
+    suspend fun setCurrentUser(user: User)
 }

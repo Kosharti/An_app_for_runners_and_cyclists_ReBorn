@@ -2,14 +2,18 @@ package com.example.an_app_for_runners_and_cyclists.ui.profile
 
 import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.PopupMenu
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -20,6 +24,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.an_app_for_runners_and_cyclists.R
 import com.example.an_app_for_runners_and_cyclists.RunnersExchangeApplication
+import com.example.an_app_for_runners_and_cyclists.auth.GoogleAuthManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.example.an_app_for_runners_and_cyclists.databinding.FragmentProfileBinding
 import com.example.an_app_for_runners_and_cyclists.ui.ViewModelFactory
 import com.example.an_app_for_runners_and_cyclists.utils.RunCalculator
@@ -161,6 +167,85 @@ class ProfileFragment : Fragment() {
 
         binding.btnCamera.setOnClickListener {
             showImageSelectionDialog()
+        }
+
+        // ДОБАВЛЯЕМ ОБРАБОТЧИК ДЛЯ КНОПКИ ВЫХОДА
+        binding.btnLogout.setOnClickListener {
+            showLogoutConfirmationDialog()
+        }
+    }
+
+    // ОБНОВЛЯЕМ МЕТОД ДЛЯ ПОДТВЕРЖДЕНИЯ ВЫХОДА - ПРОСТОЙ И НАДЕЖНЫЙ ВАРИАНТ
+    private fun showLogoutConfirmationDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.custom_logout_dialog)
+
+        // Настройка прозрачного фона
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // Обработчики кнопок
+        dialog.findViewById<Button>(R.id.btnCancel).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.findViewById<Button>(R.id.btnLogout).setOnClickListener {
+            dialog.dismiss()
+            performLogout()
+        }
+
+        // Делаем диалог отменяемым по клику вне его
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(true)
+
+        dialog.show()
+
+        // Настройка размера диалога
+        dialog.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.85).toInt(),
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
+
+    // ДОБАВЛЯЕМ МЕТОД ДЛЯ ВЫПОЛНЕНИЯ ВЫХОДА
+    private fun performLogout() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                // Получаем UserRepository через Application
+                val userRepository = (requireActivity().application as RunnersExchangeApplication).userRepository
+
+                // Получаем текущего пользователя
+                val currentUser = userRepository.getCurrentUser()
+
+                // Если пользователь вошел через Google, выходим из Google аккаунта
+                if (currentUser?.authProvider == "google") {
+                    // Создаем GoogleAuthManager для выхода
+                    val googleAuthManager = GoogleAuthManager(requireActivity(), userRepository)
+                    googleAuthManager.signOut()
+                }
+
+                // Выполняем выход из приложения
+                userRepository.logout()
+
+                // Перенаправляем на экран входа
+                navigateToSignIn()
+
+            } catch (e: Exception) {
+                // В случае ошибки все равно пытаемся перенаправить на вход
+                navigateToSignIn()
+            }
+        }
+    }
+
+    // ДОБАВЛЯЕМ МЕТОД ДЛЯ ПЕРЕНАПРАВЛЕНИЯ НА ЭКРАН ВХОДА
+    private fun navigateToSignIn() {
+        try {
+            val intent = Intent(requireContext(), com.example.an_app_for_runners_and_cyclists.SignInActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            requireActivity().finish()
+        } catch (e: Exception) {
+            // Fallback: просто завершаем активность
+            requireActivity().finish()
         }
     }
 

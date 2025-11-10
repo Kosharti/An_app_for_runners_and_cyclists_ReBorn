@@ -5,9 +5,12 @@ import android.content.SharedPreferences
 import com.example.an_app_for_runners_and_cyclists.data.local.UserDao
 import com.example.an_app_for_runners_and_cyclists.data.model.User
 import com.example.an_app_for_runners_and_cyclists.utils.StatisticsCalculator
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class UserRepositoryImpl(
     private val userDao: UserDao,
@@ -117,5 +120,55 @@ class UserRepositoryImpl(
     // Добавляем метод для получения всех пользователей
     override suspend fun getAllUsers(): List<User> {
         return userDao.getAllUsers().first()
+    }
+
+    // UserRepositoryImpl.kt - реализация
+    override suspend fun findUserByProvider(provider: String, providerId: String): User? {
+        return withContext(Dispatchers.IO) {
+            try {
+                // Ищем пользователя по провайдеру и ID провайдера
+                userDao.getAllUsers().first().find {
+                    it.authProvider == provider && it.providerId == providerId
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "❌ Error finding user by provider")
+                null
+            }
+        }
+    }
+
+    override suspend fun createUserFromOAuth(user: User): User {
+        return withContext(Dispatchers.IO) {
+            try {
+                userDao.insertUser(user)
+                Timber.d("✅ OAuth user created: ${user.email}")
+                user
+            } catch (e: Exception) {
+                Timber.e(e, "❌ Error creating OAuth user")
+                throw e
+            }
+        }
+    }
+
+    override suspend fun linkGoogleAccount(userId: String, googleUser: User) {
+        withContext(Dispatchers.IO) {
+            val existingUser = userDao.getUser(userId).first()
+            existingUser?.let { user ->
+                val updatedUser = user.copy(
+                    authProvider = "google",
+                    providerId = googleUser.providerId,
+                    accessToken = googleUser.accessToken
+                )
+                userDao.updateUser(updatedUser)
+                Timber.d("✅ Google account linked to user: $userId")
+            }
+        }
+    }
+
+    // UserRepositoryImpl.kt - реализация
+    override suspend fun setCurrentUser(user: User) {
+        currentUser = user
+        prefs.edit().putString("current_user_id", user.id).apply()
+        Timber.d("✅ Current user set to: ${user.name}")
     }
 }

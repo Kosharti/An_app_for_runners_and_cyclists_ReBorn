@@ -86,8 +86,8 @@
         android:layout_width="match_parent"
         android:layout_height="2000dp"
         android:layout_marginTop="100dp"
-        android:background="#251B24"
         android:alpha="0.8"
+        android:background="#251B24"
         android:padding="16dp">
 
         <!-- Profile Image -->
@@ -111,14 +111,14 @@
                 android:id="@+id/btnCamera"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
                 android:background="@drawable/camera_button_background"
-                android:src="@drawable/camera_alt"
-                android:scaleType="centerInside"
-                android:padding="4dp"
                 android:clickable="true"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:padding="4dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/camera_alt" />
 
         </RelativeLayout>
 
@@ -126,10 +126,11 @@
         <LinearLayout
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/profile_img"
-            android:layout_toStartOf="@+id/btnEdit"
-            android:layout_marginStart="16dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="120dp"
             android:layout_marginEnd="16dp"
+            android:layout_toStartOf="@+id/btnEdit"
+            android:layout_toRightOf="@+id/profile_img"
             android:orientation="vertical">
 
             <!-- Name -->
@@ -137,11 +138,11 @@
                 android:id="@+id/tvUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="4dp" />
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -149,10 +150,21 @@
             android:id="@+id/btnEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignTop="@id/profile_img"
-            app:srcCompat="@drawable/edit"
-            android:background="@android:color/transparent"/>
+            android:layout_alignParentEnd="true"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/edit" />
+
+        <!-- Добавляем кнопку выхода -->
+        <ImageButton
+            android:id="@+id/btnLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="50dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/logout_icon" />
 
         <!-- Stats -->
         <LinearLayout
@@ -313,9 +325,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Address"
-                        android:text=""
-                        android:maxLines="3"
                         android:inputType="textMultiLine|textPostalAddress"
+                        android:maxLines="3"
+                        android:text=""
                         android:textColor="#FFFFFF" />
 
                 </com.google.android.material.textfield.TextInputLayout>

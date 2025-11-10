@@ -3,8 +3,10 @@ package com.example.an_app_for_runners_and_cyclists
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.example.an_app_for_runners_and_cyclists.databinding.ActivitySignInBinding
+import kotlinx.coroutines.launch
 
 class SignInActivity : AppCompatActivity() {
 
@@ -18,7 +20,23 @@ class SignInActivity : AppCompatActivity() {
 
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // ПРОВЕРЯЕМ, НЕ АВТОРИЗОВАН ЛИ УЖЕ ПОЛЬЗОВАТЕЛЬ
+        checkIfUserAlreadyLoggedIn()
         setupNavigation()
+    }
+
+    // ДОБАВЛЯЕМ МЕТОД ДЛЯ ПРОВЕРКИ АВТОРИЗАЦИИ
+    private fun checkIfUserAlreadyLoggedIn() {
+        lifecycleScope.launch {
+            val userRepository = (application as RunnersExchangeApplication).userRepository
+            val isLoggedIn = userRepository.isLoggedIn()
+
+            if (isLoggedIn) {
+                // Если пользователь уже авторизован, переходим сразу в основное приложение
+                navigateToMainApp()
+            }
+        }
     }
 
     private fun setupNavigation() {

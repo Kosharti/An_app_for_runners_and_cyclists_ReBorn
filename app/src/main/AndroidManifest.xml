@@ -56,6 +56,17 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <!-- Упрощенная конфигурация для Google Sign-In -->
+        <activity
+            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+            android:exported="false"
+            tools:ignore="WrongManifestParent" />
+
+        <activity
+            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
     </application>
 
 </manifest>
