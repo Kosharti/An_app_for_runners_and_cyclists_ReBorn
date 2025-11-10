@@ -9,7 +9,6 @@ import com.example.an_app_for_runners_and_cyclists.data.repository.RunRepository
 import com.example.an_app_for_runners_and_cyclists.data.repository.RunRepositoryImpl
 import com.example.an_app_for_runners_and_cyclists.data.repository.UserRepository
 import com.example.an_app_for_runners_and_cyclists.data.repository.UserRepositoryImpl
-import com.example.an_app_for_runners_and_cyclists.service.TrackingManager
 import com.example.an_app_for_runners_and_cyclists.ui.community.OtherRunnersViewModel
 import com.example.an_app_for_runners_and_cyclists.ui.details.RunDetailsViewModel
 import com.example.an_app_for_runners_and_cyclists.ui.history.RunHistoryViewModel
