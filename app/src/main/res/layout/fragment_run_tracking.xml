@@ -153,21 +153,27 @@
             android:layout_width="142dp"
             android:layout_height="142dp"
             android:background="@drawable/circle_outer_start"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:focusable="false"/>
 
         <!-- Middle Circle -->
         <View
             android:layout_width="112dp"
             android:layout_height="112dp"
             android:background="@drawable/circle_middle_start"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:focusable="false"/>
 
         <!-- Inner Circle -->
         <View
             android:layout_width="84dp"
             android:layout_height="84dp"
             android:background="@drawable/circle_inner_start"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:focusable="false"/>
 
         <!-- Play Icon -->
         <ImageButton
@@ -175,7 +181,9 @@
             android:layout_height="72dp"
             android:src="@drawable/play_arrow"
             android:background="@android:color/transparent"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:focusable="false"/>
 
     </FrameLayout>
 
@@ -194,21 +202,27 @@
             android:layout_width="142dp"
             android:layout_height="142dp"
             android:background="@drawable/circle_outer_stop"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:focusable="false"/>
 
         <!-- Middle Circle -->
         <View
             android:layout_width="112dp"
             android:layout_height="112dp"
             android:background="@drawable/circle_middle_stop"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:focusable="false"/>
 
         <!-- Inner Circle -->
         <View
             android:layout_width="84dp"
             android:layout_height="84dp"
             android:background="@drawable/circle_inner_stop"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:focusable="false"/>
 
         <!-- Stop Icon -->
         <ImageButton
@@ -217,7 +231,9 @@
             android:src="@drawable/stop"
             android:gravity="center"
             android:background="@android:color/transparent"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:focusable="false"/>
 
     </FrameLayout>
 

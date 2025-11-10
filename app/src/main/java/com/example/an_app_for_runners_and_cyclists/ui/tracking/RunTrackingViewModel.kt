@@ -150,7 +150,7 @@ class RunTrackingViewModel(
 
             while (true) {
                 // Меняем погоду каждые 30 секунд
-                delay(30000)
+                delay(60000)
 
                 if (_trackingState.value != TrackingState.TRACKING) {
                     continue

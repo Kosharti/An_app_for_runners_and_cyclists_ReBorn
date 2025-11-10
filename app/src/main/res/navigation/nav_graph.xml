@@ -22,8 +22,8 @@
         android:name="com.example.an_app_for_runners_and_cyclists.ui.LoginFragment"
         android:label="Login">
         <action
-            android:id="@+id/action_loginFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            android:id="@+id/action_loginFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
         <action
             android:id="@+id/action_loginFragment_to_main_nav_graph"
             app:destination="@id/main_nav_graph" />
@@ -34,8 +34,8 @@
         android:name="com.example.an_app_for_runners_and_cyclists.ui.SignUpFragment"
         android:label="Sign Up">
         <action
-            android:id="@+id/action_signUpFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
         <action
             android:id="@+id/action_signUpFragment_to_main_nav_graph"
             app:destination="@id/main_nav_graph" />
